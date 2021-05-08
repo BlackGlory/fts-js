@@ -79,12 +79,15 @@ export class FTSClient {
   ): Promise<string[]> {
     const token = options.token ?? this.options.token
     const auth = this.options.basicAuth
+    const { limit, offset } = query
     const req = post(
       url(this.options.server)
     , pathname(`/fts/${namespace}/query`)
     , token && searchParams({ token })
     , auth && basicAuth(auth.username, auth.password)
     , json(query.expression)
+    , limit && searchParams({ limit: limit.toString() })
+    , offset && searchParams({ offset: offset.toString() })
     , options.signal && signal(options.signal)
     , keepalive(options.keepalive ?? this.options.keepalive)
     )

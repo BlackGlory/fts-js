@@ -35,9 +35,13 @@ describe('FTSClient', () => {
     ): Promise<string[]>
   `, async () => {
     const client = createClient()
-    const namespace = 'naemspace'
+    const namespace = 'namespace'
 
-    const result = client.query(namespace, { expression: '' })
+    const result = client.query(namespace, {
+      expression: ''
+    , limit: 20
+    , offset: 10
+    })
     const proResult = await result
 
     expect(result).toBePromise()
