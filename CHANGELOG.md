@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/BlackGlory/fts-js/compare/v0.1.1...v0.2.0) (2021-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* rewrite
+
+### Features
+
+* rewrite ([73cb8e4](https://github.com/BlackGlory/fts-js/commit/73cb8e4f68401c829711027b9fc4ba3cbd3575be))
+
 ### [0.1.1](https://github.com/BlackGlory/fts-js/compare/v0.1.0...v0.1.1) (2021-05-08)
 
 
