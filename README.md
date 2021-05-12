@@ -71,6 +71,7 @@ enum QueryKeyword {
 ```ts
 FTSClient#set(
   namespace: string
+, bucket: string
 , id: string
 , lexemes: string[]
 , options?: IFTSClientRequestOptions
@@ -84,11 +85,11 @@ FTSClient#query(
   namespace: string
 , query: {
     expression: IQueryExpression
+    buckets?: string[]
     limit?: number
-    offset?: number
   }
 , options?: IFTSClientRequestOptions
-): Promise<string[]>
+): Promise<Array<{ bucket: string; id: string }>>
 ```
 
 #### del
@@ -96,33 +97,70 @@ FTSClient#query(
 ```ts
 FTSClient#del(
   namespace: string
+, bucket: string
 , id: string
 , options?: IFTSClientRequestOptions
 ): Promise<void>
 ```
 
-#### clear
+#### clearNamespace
 
 ```ts
-FTSClient#clear(
+FTSClient#clearNamespace(
   namespace: string
 , options?: IFTSClientRequestOptions
 ): Promise<void>
 ```
 
-#### stats
+#### clearBucket
 
 ```ts
-FTSClient#stats(
+FTSClient#clearBucket(
+  namespace: string
+, options?: IFTSClientRequestOptions
+): Promise<void>
+```
+
+#### getNamespaceStats
+
+```ts
+FTSClient#getNamespaceStats(
   namespace: string
 , options?: IFTSClientRequestOptionsWithoutToken
-): Promise<{ namespace: stirng; objects: number }>
+): Promise<{
+  namespace: stirng
+  buckets: nubmer
+  objects: number
+}>
+```
+
+#### getBucketStats
+
+```ts
+FTSClient#getBucketStats(
+  namespace: string
+, bucket: string
+, options?: IFTSClientRequestOptionsWithoutToken
+): Promise<{
+  namespace: stirng
+  bucket: string
+  objects: number
+}>
 ```
 
 #### getAllNamespaces
 
 ```ts
 FTSClient#getAllNamespaces(options?: IFTSClientRequestOptions): Promise<string[]>
+```
+
+#### getAllBuckets
+
+```ts
+FTSClient#getAllBuckets(
+  namespace: string
+, options?: IFTSClientRequestOptions
+): Promise<string[]>
 ```
 
 ### FTSManager

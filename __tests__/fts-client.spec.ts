@@ -10,61 +10,98 @@ afterAll(() => server.close())
 
 describe('FTSClient', () => {
   test(`
-    set(namespace: string, id: string, lexemes: string[]): Promise<void>
+    set(
+      namespace: string
+    , bucket: string
+    , id: string
+    , lexemes: string[]
+    ): Promise<void>
   `, async () => {
     const client = createClient()
     const namespace = 'namespace'
+    const bucket = 'bucket'
     const id = 'id'
     const lexemes = ['lexeme']
 
-    const result = client.set(namespace, id, lexemes)
+    const result = client.set(namespace, bucket, id, lexemes)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  test(`
+  describe(`
     query(
       namespace: string
     , query: {
         expression: IQueryExpression
+        buckets?: string[]
         limit?: number
-        offset?: number
       }
     ): Promise<string[]>
+  `, () => {
+    test('no buckets', async () => {
+      const client = createClient()
+      const namespace = 'namespace'
+
+      const result = client.query(namespace, {
+        expression: ''
+      , limit: 20
+      })
+      const proResult = await result
+
+      expect(result).toBePromise()
+      expect(proResult).toStrictEqual(['id'])
+    })
+
+    test('with buckets', async () => {
+      const client = createClient()
+      const namespace = 'namespace'
+
+      const result = client.query(namespace, {
+        expression: ''
+      , buckets: ['bucket']
+      , limit: 20
+      })
+      const proResult = await result
+
+      expect(result).toBePromise()
+      expect(proResult).toStrictEqual(['id'])
+    })
+  })
+
+  test(`
+    del(namespace: string, bucket: string, id: string): Promise<void>
   `, async () => {
     const client = createClient()
     const namespace = 'namespace'
-
-    const result = client.query(namespace, {
-      expression: ''
-    , limit: 20
-    , offset: 10
-    })
-    const proResult = await result
-
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['id'])
-  })
-
-  test('del(namespace: string, id: string): Promise<void>', async () => {
-    const client = createClient()
-    const namespace = 'namespace'
+    const bucket = 'bucket'
     const id = 'id'
 
-    const result = client.del(namespace, id)
+    const result = client.del(namespace, bucket, id)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toBeUndefined()
   })
 
-  test('clear(namespace: string): Prmise<void>', async () => {
+  test('clearNamespace(namespace: string): Prmise<void>', async () => {
     const client = createClient()
     const namespace = 'namespace'
 
-    const result = client.clear(namespace)
+    const result = client.clearNamespace(namespace)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toBeUndefined()
+  })
+
+  test('clearBucket(namespace: string, bucket: string): Prmise<void>', async () => {
+    const client = createClient()
+    const namespace = 'namespace'
+    const bucket = 'bucket'
+
+    const result = client.clearBucket(namespace, bucket)
     const proResult = await result
 
     expect(result).toBePromise()
@@ -72,17 +109,44 @@ describe('FTSClient', () => {
   })
 
   test(`
-    stats(namespace: string): Promise<{ namespace: string; objects: number }>
+    getNamespaceStats(namespace: string): Promise<{
+      namespace: string
+      buckets: number
+      objects: number
+    }>
   `, async () => {
     const client = createClient()
     const namespace = 'namespace'
 
-    const result = client.stats(namespace)
+    const result = client.getNamespaceStats(namespace)
     const proResult = await result
 
     expect(result).toBePromise()
     expect(proResult).toStrictEqual({
       namespace
+    , buckets: 1
+    , objects: 1
+    })
+  })
+
+  test(`
+    getBucketStats(namespace: string, bucket: string): Promise<{
+      namespace: string
+      bucket: string
+      objects: number
+    }>
+  `, async () => {
+    const client = createClient()
+    const namespace = 'namespace'
+    const bucket = 'bucket'
+
+    const result = client.getBucketStats(namespace, bucket)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toStrictEqual({
+      namespace
+    , bucket
     , objects: 1
     })
   })
@@ -95,6 +159,17 @@ describe('FTSClient', () => {
 
     expect(result).toBePromise()
     expect(proResult).toStrictEqual(['namespace'])
+  })
+
+  test('getAllBuckets(): Promise<string[]>', async () => {
+    const client = createClient()
+    const namespace = 'namespace'
+
+    const result = client.getAllBuckets(namespace)
+    const proResult = await result
+
+    expect(result).toBePromise()
+    expect(proResult).toStrictEqual(['bucket'])
   })
 })
 

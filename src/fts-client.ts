@@ -49,6 +49,7 @@ export class FTSClient {
 
   async set(
     namespace: string
+  , bucket: string
   , id: string
   , lexemes: string[]
   , options: IFTSClientRequestOptions = {}
@@ -57,7 +58,7 @@ export class FTSClient {
     const auth = this.options.basicAuth
     const req = put(
       url(this.options.server)
-    , pathname(`/fts/${namespace}/objects/${id}`)
+    , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
     , token && searchParams({ token })
     , auth && basicAuth(auth.username, auth.password)
     , json(lexemes)
@@ -72,22 +73,26 @@ export class FTSClient {
     namespace: string
   , query: {
       expression: IQueryExpression
+      buckets?: string[]
       limit?: number
-      offset?: number
     }
   , options: IFTSClientRequestOptions = {}
   ): Promise<string[]> {
     const token = options.token ?? this.options.token
     const auth = this.options.basicAuth
-    const { limit, offset } = query
+    const { limit, buckets } = query
+
     const req = post(
       url(this.options.server)
-    , pathname(`/fts/${namespace}/query`)
+    , pathname(
+        buckets
+      ? `/fts/${namespace}/buckets/${buckets.join(',')}/query`
+      : `/fts/${namespace}/query`
+      )
     , token && searchParams({ token })
     , auth && basicAuth(auth.username, auth.password)
     , json(query.expression)
     , limit && searchParams({ limit: limit.toString() })
-    , offset && searchParams({ offset: offset.toString() })
     , options.signal && signal(options.signal)
     , keepalive(options.keepalive ?? this.options.keepalive)
     )
@@ -99,6 +104,7 @@ export class FTSClient {
 
   async del(
     namespace: string
+  , bucket: string
   , id: string
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
@@ -106,7 +112,7 @@ export class FTSClient {
     const auth = this.options.basicAuth
     const req = del(
       url(this.options.server)
-    , pathname(`/fts/${namespace}/objects/${id}`)
+    , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
     , token && searchParams({ token })
     , auth && basicAuth(auth.username, auth.password)
     , options.signal && signal(options.signal)
@@ -116,7 +122,7 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
-  async clear(
+  async clearNamespace(
     namespace: string
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
@@ -124,7 +130,7 @@ export class FTSClient {
     const auth = this.options.basicAuth
     const req = del(
       url(this.options.server)
-    , pathname(`/fts/${namespace}/objects`)
+    , pathname(`/fts/${namespace}`)
     , token && searchParams({ token })
     , auth && basicAuth(auth.username, auth.password)
     , options.signal && signal(options.signal)
@@ -134,7 +140,26 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
-  async stats(
+  async clearBucket(
+    namespace: string
+  , bucket: string
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<void> {
+    const token = options.token ?? this.options.token
+    const auth = this.options.basicAuth
+    const req = del(
+      url(this.options.server)
+    , pathname(`/fts/${namespace}/buckets/${bucket}`)
+    , token && searchParams({ token })
+    , auth && basicAuth(auth.username, auth.password)
+    , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    )
+
+    await fetch(req).then(ok)
+  }
+
+  async getNamespaceStats(
     namespace: string
   , options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<{ namespace: string; objects: number }> {
@@ -155,6 +180,28 @@ export class FTSClient {
       }
   }
 
+  async getBucketStats(
+    namespace: string
+  , bucket: string
+  , options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<{ namespace: string; objects: number }> {
+    const auth = this.options.basicAuth
+    const req = get(
+      url(this.options.server)
+    , pathname(`/fts/${namespace}/buckets/${bucket}/stats`)
+    , auth && basicAuth(auth.username, auth.password)
+    , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    )
+
+    return await fetch(req)
+      .then(ok)
+      .then(toJSON) as {
+        namespace: string
+        objects: number
+      }
+  }
+
   async getAllNamespaces(
     options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
@@ -162,6 +209,24 @@ export class FTSClient {
     const req = get(
       url(this.options.server)
     , pathname('/fts')
+    , auth && basicAuth(auth.username, auth.password)
+    , options.signal && signal(options.signal)
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    )
+
+    return await fetch(req)
+      .then(ok)
+      .then(toJSON) as string[]
+  }
+
+  async getAllBuckets(
+    namespace: string
+  , options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<string[]> {
+    const auth = this.options.basicAuth
+    const req = get(
+      url(this.options.server)
+    , pathname(`/fts/${namespace}/buckets`)
     , auth && basicAuth(auth.username, auth.password)
     , options.signal && signal(options.signal)
     , keepalive(options.keepalive ?? this.options.keepalive)
