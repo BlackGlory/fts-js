@@ -51,7 +51,9 @@ describe('FTSClient', () => {
       const proResult = await result
 
       expect(result).toBePromise()
-      expect(proResult).toStrictEqual(['id'])
+      expect(proResult).toStrictEqual([
+        { bucket: 'bucket', id: 'id' }
+      ])
     })
 
     test('with buckets', async () => {
@@ -66,7 +68,9 @@ describe('FTSClient', () => {
       const proResult = await result
 
       expect(result).toBePromise()
-      expect(proResult).toStrictEqual(['id'])
+      expect(proResult).toStrictEqual([
+        { bucket: 'bucket', id: 'id' }
+      ])
     })
   })
 

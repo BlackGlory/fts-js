@@ -44,6 +44,11 @@ export type IAndExpression = [IQueryExpression, QueryKeyword.And, IQueryExpressi
 export type IOrExpression = [IQueryExpression, QueryKeyword.Or, IQueryExpression]
 export type INotExpression = [QueryKeyword.Not, IQueryExpression]
 
+interface IQueryResult {
+  bucket: string
+  id: string
+}
+
 export class FTSClient {
   constructor(private options: IFTSClientOptions) {}
 
@@ -77,7 +82,7 @@ export class FTSClient {
       limit?: number
     }
   , options: IFTSClientRequestOptions = {}
-  ): Promise<string[]> {
+  ): Promise<IQueryResult[]> {
     const token = options.token ?? this.options.token
     const auth = this.options.basicAuth
     const { limit, buckets } = query
@@ -99,7 +104,7 @@ export class FTSClient {
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON) as string[]
+      .then(toJSON) as IQueryResult[]
   }
 
   async del(

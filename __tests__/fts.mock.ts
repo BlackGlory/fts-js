@@ -15,7 +15,9 @@ export const server = setupServer(
 
     return res(
       ctx.status(200)
-    , ctx.json(['id'])
+    , ctx.json([
+        { bucket: 'bucket', id: 'id' }
+      ])
     )
   })
 
@@ -25,7 +27,9 @@ export const server = setupServer(
 
     return res(
       ctx.status(200)
-    , ctx.json(['id'])
+    , ctx.json([
+      { bucket: 'bucket', id: 'id' }
+    ])
     )
   })
 
