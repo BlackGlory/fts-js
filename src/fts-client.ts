@@ -80,12 +80,13 @@ export class FTSClient {
       expression: IQueryExpression
       buckets?: string[]
       limit?: number
+      offset?: number
     }
   , options: IFTSClientRequestOptions = {}
   ): Promise<IQueryResult[]> {
     const token = options.token ?? this.options.token
     const auth = this.options.basicAuth
-    const { limit, buckets } = query
+    const { buckets, limit, offset } = query
 
     const req = post(
       url(this.options.server)
@@ -98,6 +99,7 @@ export class FTSClient {
     , auth && basicAuth(auth.username, auth.password)
     , json(query.expression)
     , limit && searchParams({ limit: limit.toString() })
+    , offset && searchParams({ offset: offset.toString() })
     , options.signal && signal(options.signal)
     , keepalive(options.keepalive ?? this.options.keepalive)
     )

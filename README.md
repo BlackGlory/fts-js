@@ -87,6 +87,7 @@ FTSClient#query(
     expression: IQueryExpression
     buckets?: string[]
     limit?: number
+    offset?: number
   }
 , options?: IFTSClientRequestOptions
 ): Promise<Array<{ bucket: string; id: string }>>

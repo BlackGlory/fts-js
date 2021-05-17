@@ -12,6 +12,7 @@ export const server = setupServer(
 , rest.post('/fts/:namespace/query', (req, res, ctx) => {
     if (badToken(req)) return res(ctx.status(401))
     if (req.url.searchParams.get('limit') !== '20') return res(ctx.status(400))
+    if (req.url.searchParams.get('offset') !== '10') return res(ctx.status(400))
 
     return res(
       ctx.status(200)
@@ -24,6 +25,7 @@ export const server = setupServer(
 , rest.post('/fts/:namespace/buckets/:buckets/query', (req, res, ctx) => {
     if (badToken(req)) return res(ctx.status(401))
     if (req.url.searchParams.get('limit') !== '20') return res(ctx.status(400))
+    if (req.url.searchParams.get('offset') !== '10') return res(ctx.status(400))
 
     return res(
       ctx.status(200)

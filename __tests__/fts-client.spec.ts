@@ -37,6 +37,7 @@ describe('FTSClient', () => {
         expression: IQueryExpression
         buckets?: string[]
         limit?: number
+        offset?: number
       }
     ): Promise<string[]>
   `, () => {
@@ -47,6 +48,7 @@ describe('FTSClient', () => {
       const result = client.query(namespace, {
         expression: ''
       , limit: 20
+      , offset: 10
       })
       const proResult = await result
 
@@ -64,6 +66,7 @@ describe('FTSClient', () => {
         expression: ''
       , buckets: ['bucket']
       , limit: 20
+      , offset: 10
       })
       const proResult = await result
 
