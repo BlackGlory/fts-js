@@ -1,20 +1,14 @@
 import { fetch } from 'extra-fetch'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname, signal } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IFTSManagerOptions } from './fts-manager'
-import { IFTSManagerRequestOptions } from './types'
+import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
 
-export class BlacklistClient {
-  constructor(private options: IFTSManagerOptions) {}
-
+export class BlacklistClient extends FTSManagerBase {
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/blacklist')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -24,9 +18,8 @@ export class BlacklistClient {
 
   async add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/blacklist/${namespace}`)
-    , password(this.options.adminPassword)
     , options.signal && signal(options.signal)
     )
 
@@ -35,10 +28,8 @@ export class BlacklistClient {
 
   async remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/blacklist/${namespace}`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)

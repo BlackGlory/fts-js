@@ -1,11 +1,13 @@
 import { fetch } from 'extra-fetch'
-import { put, get, del, post } from 'extra-request'
+import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
 import { url, pathname, json, searchParams, signal, basicAuth, keepalive }
   from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import { QueryKeyword } from './query-keyword'
+import { QueryKeyword } from './utils'
+import { timeoutSignal, raceAbortSignals } from 'extra-promise'
+import { Falsy } from 'justypes'
 
-export { QueryKeyword } from './query-keyword'
+export { QueryKeyword } from './utils'
 export { HTTPClientError } from '@blackglory/http-status'
 
 export interface IFTSClientOptions {
@@ -16,17 +18,20 @@ export interface IFTSClientOptions {
     password: string
   }
   keepalive?: boolean
+  timeout?: number
 }
 
 export interface IFTSClientRequestOptions {
   signal?: AbortSignal
   token?: string
   keepalive?: boolean
+  timeout?: number | false
 }
 
 export interface IFTSClientRequestOptionsWithoutToken {
   signal?: AbortSignal
   keepalive?: boolean
+  timeout?: number | false
 }
 
 export type IQueryExpression =
@@ -59,16 +64,10 @@ export class FTSClient {
   , lexemes: string[]
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
-    const auth = this.options.basicAuth
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
-    , token && searchParams({ token })
-    , auth && basicAuth(auth.username, auth.password)
     , json(lexemes)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -84,24 +83,18 @@ export class FTSClient {
     }
   , options: IFTSClientRequestOptions = {}
   ): Promise<IQueryResult[]> {
-    const token = options.token ?? this.options.token
-    const auth = this.options.basicAuth
     const { buckets, limit, offset } = query
 
     const req = post(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(
         buckets
       ? `/fts/${namespace}/buckets/${buckets.join(',')}/query`
       : `/fts/${namespace}/query`
       )
-    , token && searchParams({ token })
-    , auth && basicAuth(auth.username, auth.password)
     , json(query.expression)
     , limit && searchParams({ limit: limit.toString() })
     , offset && searchParams({ offset: offset.toString() })
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -115,15 +108,9 @@ export class FTSClient {
   , id: string
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
-    const auth = this.options.basicAuth
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
-    , token && searchParams({ token })
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -133,15 +120,9 @@ export class FTSClient {
     namespace: string
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
-    const auth = this.options.basicAuth
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}`)
-    , token && searchParams({ token })
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -152,15 +133,9 @@ export class FTSClient {
   , bucket: string
   , options: IFTSClientRequestOptions = {}
   ): Promise<void> {
-    const token = options.token ?? this.options.token
-    const auth = this.options.basicAuth
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/buckets/${bucket}`)
-    , token && searchParams({ token })
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     await fetch(req).then(ok)
@@ -170,13 +145,9 @@ export class FTSClient {
     namespace: string
   , options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<{ namespace: string; objects: number }> {
-    const auth = this.options.basicAuth
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/stats`)
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -192,13 +163,9 @@ export class FTSClient {
   , bucket: string
   , options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<{ namespace: string; objects: number }> {
-    const auth = this.options.basicAuth
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/buckets/${bucket}/stats`)
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -212,13 +179,9 @@ export class FTSClient {
   async getAllNamespaces(
     options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
-    const auth = this.options.basicAuth
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/fts')
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
@@ -230,17 +193,36 @@ export class FTSClient {
     namespace: string
   , options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
-    const auth = this.options.basicAuth
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/fts/${namespace}/buckets`)
-    , auth && basicAuth(auth.username, auth.password)
-    , options.signal && signal(options.signal)
-    , keepalive(options.keepalive ?? this.options.keepalive)
     )
 
     return await fetch(req)
       .then(ok)
       .then(toJSON) as string[]
+  }
+
+  private getCommonTransformers(
+    options: IFTSClientRequestOptions | IFTSClientRequestOptionsWithoutToken
+  ): Array<IHTTPOptionsTransformer | Falsy> {
+    const token = 'token' in options
+                  ? (options.token ?? this.options.token)
+                  : this.options.token
+    const auth = this.options.basicAuth
+
+    return [
+      url(this.options.server)
+    , auth && basicAuth(auth.username, auth.password)
+    , token && searchParams({ token })
+    , signal(raceAbortSignals([
+        options.signal
+      , options.timeout !== false && (
+          (options.timeout && timeoutSignal(options.timeout)) ??
+          (this.options.timeout && timeoutSignal(this.options.timeout))
+        )
+      ]))
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    ]
   }
 }

@@ -1,20 +1,14 @@
 import { fetch } from 'extra-fetch'
-import { password } from './utils'
 import { get, put, del } from 'extra-request'
-import { url, pathname, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname } from 'extra-request/lib/es2018/transformers'
 import { ok, toJSON } from 'extra-response'
-import type { IFTSManagerOptions } from './fts-manager'
-import { IFTSManagerRequestOptions } from './types'
+import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
 
-export class WhitelistClient {
-  constructor(private options: IFTSManagerOptions) {}
-
+export class WhitelistClient extends FTSManagerBase {
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname('/admin/whitelist')
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     return await fetch(req)
@@ -24,10 +18,8 @@ export class WhitelistClient {
 
   async add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = put(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/whitelist/${namespace}`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)
@@ -35,10 +27,8 @@ export class WhitelistClient {
 
   async remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = del(
-      url(this.options.server)
+      ...this.getCommonTransformers(options)
     , pathname(`/admin/whitelist/${namespace}`)
-    , password(this.options.adminPassword)
-    , options.signal && signal(options.signal)
     )
 
     await fetch(req).then(ok)

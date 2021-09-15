@@ -1,13 +1,39 @@
-import { IHTTPOptions, IHTTPOptionsTransformer } from 'extra-request'
-import { Headers } from 'extra-fetch'
+import { IHTTPOptionsTransformer } from 'extra-request'
+import { url, signal, keepalive, bearerAuth } from 'extra-request/lib/es2018/transformers'
+import { timeoutSignal, raceAbortSignals } from 'extra-promise'
+import type { IFTSManagerOptions } from './fts-manager'
 
-export function password(password: string): IHTTPOptionsTransformer {
-  return (options: IHTTPOptions) => {
-    const headers = new Headers(options.headers)
-    headers.set('Authorization', `Bearer ${password}`)
-    return {
-      ...options
-    , headers
-    }
+export enum QueryKeyword {
+  And = 0
+, Or = 1
+, Not = 2
+, Phrase = 3
+, Prefix = 4
+}
+
+export interface IFTSManagerRequestOptions {
+  signal?: AbortSignal
+  keepalive?: boolean
+  timeout?: number | false
+}
+
+export class FTSManagerBase {
+  constructor(private options: IFTSManagerOptions) {}
+
+  protected getCommonTransformers(
+    options: IFTSManagerRequestOptions
+  ): IHTTPOptionsTransformer[] {
+    return [
+      url(this.options.server)
+    , bearerAuth(this.options.adminPassword)
+    , signal(raceAbortSignals([
+        options.signal
+      , options.timeout !== false && (
+          (options.timeout && timeoutSignal(options.timeout)) ??
+          (this.options.timeout && timeoutSignal(this.options.timeout))
+        )
+      ]))
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    ]
   }
 }

@@ -21,6 +21,7 @@ new FTSClient({
   , password: string
   }
 , keepalive?: boolean
+, timeout?: number
 })
 ```
 
@@ -29,11 +30,13 @@ interface IFTSClientRequestOptions {
   signal?: AbortSignal
   token?: string
   keepalive?: boolean
+  timeout?: number | false
 }
 
 interface IFTSClientRequestOptionsWithoutToken {
   signal?: AbortSignal
   keepalive?: boolean
+  timeout?: number | false
 }
 ```
 
@@ -170,12 +173,16 @@ FTSClient#getAllBuckets(
 new FTSManager({
   server: string
   adminPassword: string
+  keepalive?: boolean
+  timeout?: number
 })
 ```
 
 ```ts
 interface IFTSManagerRequestOptions {
   signal?: AbortSignal
+  keepalive?: boolean
+  timeout?: number | false
 }
 ```
 
