@@ -1,7 +1,7 @@
 import { fetch } from 'extra-fetch'
 import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
 import { url, pathname, json, searchParams, signal, basicAuth, keepalive }
-  from 'extra-request/lib/es2018/transformers'
+  from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { QueryKeyword } from './utils'
 import { timeoutSignal, raceAbortSignals } from 'extra-promise'

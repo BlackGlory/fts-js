@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { pathname, signal } from 'extra-request/lib/es2018/transformers'
+import { pathname, signal } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
 
