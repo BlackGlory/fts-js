@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/BlackGlory/fts-js/compare/v0.2.6...v0.2.7) (2021-10-06)
+
+
+### Features
+
+* export AbortError ([03730db](https://github.com/BlackGlory/fts-js/commit/03730db60656069ccdbdf7d46e405f048d58c2b0))
+
 ### [0.2.6](https://github.com/BlackGlory/fts-js/compare/v0.2.5...v0.2.6) (2021-09-18)
 
 
