@@ -6,7 +6,7 @@ import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
 
 export class WhitelistClient extends FTSManagerBase {
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
@@ -20,7 +20,7 @@ export class WhitelistClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = put(
@@ -32,7 +32,7 @@ export class WhitelistClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = del(

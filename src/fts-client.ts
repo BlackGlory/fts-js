@@ -58,7 +58,7 @@ export class FTSClient {
   constructor(private options: IFTSClientOptions) {}
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async set(
     namespace: string
@@ -77,7 +77,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async query(
     namespace: string
@@ -109,7 +109,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async del(
     namespace: string
@@ -126,7 +126,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async clearNamespace(
     namespace: string
@@ -141,7 +141,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async clearBucket(
     namespace: string
@@ -157,7 +157,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getNamespaceStats(
     namespace: string
@@ -177,7 +177,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getBucketStats(
     namespace: string
@@ -198,7 +198,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getAllNamespaces(
     options: IFTSClientRequestOptionsWithoutToken = {}
@@ -214,7 +214,7 @@ export class FTSClient {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getAllBuckets(
     namespace: string

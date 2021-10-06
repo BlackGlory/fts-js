@@ -13,7 +13,7 @@ interface ITokenInfo {
 
 export class TokenClient extends FTSManagerBase {
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
@@ -27,7 +27,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async getTokens(
     namespace: string
@@ -44,7 +44,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async addWriteToken(
     namespace: string
@@ -60,7 +60,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async removeWriteToken(
     namespace: string
@@ -76,7 +76,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async addQueryToken(
     namespace: string
@@ -92,7 +92,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async removeQueryToken(
     namespace: string
@@ -108,7 +108,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async addDeleteToken(
     namespace: string
@@ -124,7 +124,7 @@ export class TokenClient extends FTSManagerBase {
   }
 
   /**
-   * @throws AbortError
+   * @throws {AbortError}
    */
   async removeDeleteToken(
     namespace: string
