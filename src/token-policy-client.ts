@@ -11,6 +11,9 @@ interface ITokenPolicy {
 }
 
 export class TokenPolicyClient extends FTSManagerBase {
+  /**
+   * @throws AbortError
+   */
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -22,6 +25,9 @@ export class TokenPolicyClient extends FTSManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws AbortError
+   */
   async get(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<ITokenPolicy> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -33,6 +39,9 @@ export class TokenPolicyClient extends FTSManagerBase {
       .then(toJSON) as ITokenPolicy
   }
 
+  /**
+   * @throws AbortError
+   */
   async setWriteTokenRequired(
     namespace: string
   , val: boolean
@@ -47,6 +56,9 @@ export class TokenPolicyClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async removeWriteTokenRequired(
     namespace: string
   , options: IFTSManagerRequestOptions = {}
@@ -59,6 +71,9 @@ export class TokenPolicyClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async setQueryTokenRequired(
     namespace: string
   , val: boolean
@@ -73,6 +88,9 @@ export class TokenPolicyClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async removeQueryTokenRequired(
     namespace: string
   , options: IFTSManagerRequestOptions = {}
@@ -85,6 +103,9 @@ export class TokenPolicyClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async setDeleteTokenRequired(
     namespace: string
   , val: boolean
@@ -99,6 +120,9 @@ export class TokenPolicyClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async removeDeleteTokenRequired(
     namespace: string
   , options: IFTSManagerRequestOptions = {}

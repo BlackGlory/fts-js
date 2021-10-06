@@ -57,6 +57,9 @@ interface IQueryResult {
 export class FTSClient {
   constructor(private options: IFTSClientOptions) {}
 
+  /**
+   * @throws AbortError
+   */
   async set(
     namespace: string
   , bucket: string
@@ -73,6 +76,9 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async query(
     namespace: string
   , query: {
@@ -102,6 +108,9 @@ export class FTSClient {
       .then(toJSON) as IQueryResult[]
   }
 
+  /**
+   * @throws AbortError
+   */
   async del(
     namespace: string
   , bucket: string
@@ -116,6 +125,9 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async clearNamespace(
     namespace: string
   , options: IFTSClientRequestOptions = {}
@@ -128,6 +140,9 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async clearBucket(
     namespace: string
   , bucket: string
@@ -141,6 +156,9 @@ export class FTSClient {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async getNamespaceStats(
     namespace: string
   , options: IFTSClientRequestOptionsWithoutToken = {}
@@ -158,6 +176,9 @@ export class FTSClient {
       }
   }
 
+  /**
+   * @throws AbortError
+   */
   async getBucketStats(
     namespace: string
   , bucket: string
@@ -176,6 +197,9 @@ export class FTSClient {
       }
   }
 
+  /**
+   * @throws AbortError
+   */
   async getAllNamespaces(
     options: IFTSClientRequestOptionsWithoutToken = {}
   ): Promise<string[]> {
@@ -189,6 +213,9 @@ export class FTSClient {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws AbortError
+   */
   async getAllBuckets(
     namespace: string
   , options: IFTSClientRequestOptionsWithoutToken = {}

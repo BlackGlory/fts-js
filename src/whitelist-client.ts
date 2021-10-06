@@ -5,6 +5,9 @@ import { ok, toJSON } from 'extra-response'
 import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
 
 export class WhitelistClient extends FTSManagerBase {
+  /**
+   * @throws AbortError
+   */
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
@@ -16,6 +19,9 @@ export class WhitelistClient extends FTSManagerBase {
       .then(toJSON) as string[]
   }
 
+  /**
+   * @throws AbortError
+   */
   async add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
@@ -25,6 +31,9 @@ export class WhitelistClient extends FTSManagerBase {
     await fetch(req).then(ok)
   }
 
+  /**
+   * @throws AbortError
+   */
   async remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
