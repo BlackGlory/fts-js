@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/BlackGlory/fts-js/compare/v0.2.9...v0.3.0) (2021-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* - The minimum version is Node.js v16
+
+* update dependencies ([5d571db](https://github.com/BlackGlory/fts-js/commit/5d571db1e65257d7a50b33383001083f693e5185))
+
 ### [0.2.9](https://github.com/BlackGlory/fts-js/compare/v0.2.8...v0.2.9) (2021-10-14)
 
 ### [0.2.8](https://github.com/BlackGlory/fts-js/compare/v0.2.7...v0.2.8) (2021-10-06)
