@@ -4,7 +4,7 @@ import { url, pathname, json, searchParams, signal, basicAuth, keepalive }
   from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { QueryKeyword } from './utils'
-import { timeoutSignal, raceAbortSignals } from 'extra-promise'
+import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import { Falsy } from 'justypes'
 
 export { QueryKeyword } from './utils'
