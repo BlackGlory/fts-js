@@ -1,7 +1,5 @@
 # fts-js
-
 ## Install
-
 ```sh
 npm install --save @blackglory/fts-js
 # or
@@ -9,9 +7,7 @@ yarn add @blackglory/fts-js
 ```
 
 ## API
-
 ### FTSClient
-
 ```ts
 new FTSClient({
   server: string
@@ -58,7 +54,6 @@ type INotExpression = [QueryKeyword.Not, IQueryExpression]
 ```
 
 #### QueryKeyword
-
 ```ts
 enum QueryKeyword {
   And
@@ -70,7 +65,6 @@ enum QueryKeyword {
 ```
 
 #### set
-
 ```ts
 FTSClient#set(
   namespace: string
@@ -82,7 +76,6 @@ FTSClient#set(
 ```
 
 #### query
-
 ```ts
 FTSClient#query(
   namespace: string
@@ -97,7 +90,6 @@ FTSClient#query(
 ```
 
 #### del
-
 ```ts
 FTSClient#del(
   namespace: string
@@ -108,7 +100,6 @@ FTSClient#del(
 ```
 
 #### clearNamespace
-
 ```ts
 FTSClient#clearNamespace(
   namespace: string
@@ -117,7 +108,6 @@ FTSClient#clearNamespace(
 ```
 
 #### clearBucket
-
 ```ts
 FTSClient#clearBucket(
   namespace: string
@@ -126,7 +116,6 @@ FTSClient#clearBucket(
 ```
 
 #### getNamespaceStats
-
 ```ts
 FTSClient#getNamespaceStats(
   namespace: string
@@ -139,7 +128,6 @@ FTSClient#getNamespaceStats(
 ```
 
 #### getBucketStats
-
 ```ts
 FTSClient#getBucketStats(
   namespace: string
@@ -153,13 +141,11 @@ FTSClient#getBucketStats(
 ```
 
 #### getAllNamespaces
-
 ```ts
 FTSClient#getAllNamespaces(options?: IFTSClientRequestOptions): Promise<string[]>
 ```
 
 #### getAllBuckets
-
 ```ts
 FTSClient#getAllBuckets(
   namespace: string
@@ -168,7 +154,6 @@ FTSClient#getAllBuckets(
 ```
 
 ### FTSManager
-
 ```ts
 new FTSManager({
   server: string
@@ -187,9 +172,7 @@ interface IFTSManagerRequestOptions {
 ```
 
 #### Blacklist
-
 ##### getNamespaces
-
 ```ts
 FTSManager#Blacklist.getNamespaces(
   options?: IFTSManagerRequestOptions
@@ -197,7 +180,6 @@ FTSManager#Blacklist.getNamespaces(
 ```
 
 ##### add
-
 ```ts
 FTSManager#Blacklist.add(
   namespace: string
@@ -206,7 +188,6 @@ FTSManager#Blacklist.add(
 ```
 
 ##### remove
-
 ```ts
 FTSManager#Blacklist.remove(
   namespace: string
@@ -215,9 +196,7 @@ FTSManager#Blacklist.remove(
 ```
 
 #### Whitelist
-
 ##### getNamespaces
-
 ```ts
 FTSManager#Whitelist.getNamespaces(
   options?: IFTSManagerRequestOptions
@@ -225,7 +204,6 @@ FTSManager#Whitelist.getNamespaces(
 ```
 
 ##### add
-
 ```ts
 FTSManager#Whitelist.add(
   namespace: string
@@ -234,7 +212,6 @@ FTSManager#Whitelist.add(
 ```
 
 ##### remove
-
 ```ts
 FTSManager#Whitelist.remove(
   namespace: string
@@ -243,9 +220,7 @@ FTSManager#Whitelist.remove(
 ```
 
 #### TokenPolicy
-
 ##### getNamespaces
-
 ```ts
 FTSManager#TokenPolicy.getNamespaces(
   options?: IFTSManagerRequestOptions
@@ -253,7 +228,6 @@ FTSManager#TokenPolicy.getNamespaces(
 ```
 
 ##### get
-
 ```ts
 FTSManager#TokenPolicy.get(
   namespace: string
@@ -266,7 +240,6 @@ FTSManager#TokenPolicy.get(
 ```
 
 ##### setWriteTokenRequired
-
 ```ts
 FTSManager#TokenPolicy.setWriteTokenRequired(
   namespace: string
@@ -276,7 +249,6 @@ FTSManager#TokenPolicy.setWriteTokenRequired(
 ```
 
 ##### removeWriteTokenRequired
-
 ```ts
 FTSManager#TokenPolicy.removeWriteTokenRequired(
   namespace: string
@@ -285,8 +257,6 @@ FTSManager#TokenPolicy.removeWriteTokenRequired(
 ```
 
 ##### setQueryTokenRequired
-
-
 ```ts
 FTSManager#TokenPolicy.setQueryTokenRequired(
   namespace: string
@@ -296,7 +266,6 @@ FTSManager#TokenPolicy.setQueryTokenRequired(
 ```
 
 ##### removeQueryTokenRequired
-
 ```ts
 FTSManager#TokenPolicy.removeQueryTokenRequired(
   namespace: string
@@ -305,7 +274,6 @@ FTSManager#TokenPolicy.removeQueryTokenRequired(
 ```
 
 ##### setDeleteTokenRequired
-
 ```ts
 FTSManager#TokenPolicy.setDeleteTokenRequired(
   namespace: string
@@ -315,7 +283,6 @@ FTSManager#TokenPolicy.setDeleteTokenRequired(
 ```
 
 ##### removeDeleteTokenRequired
-
 ```ts
 FTSManager#TokenPolicy.removeDeleteTokenRequired(
   namespace: string
@@ -324,15 +291,12 @@ FTSManager#TokenPolicy.removeDeleteTokenRequired(
 ```
 
 #### Token
-
 ##### getNamespaces
-
 ```ts
 FTSManager#Token.getNamespaces(options?: IFTSManagerRequestOptions): Promise<string[]>
 ```
 
 ##### getTokens
-
 ```ts
 FTSManager#Token.getTokens(
   namespace: string
@@ -346,7 +310,6 @@ FTSManager#Token.getTokens(
 ```
 
 ##### addWriteToken
-
 ```ts
 FTSManager#Token.addWriteToken(
   namespace: string
@@ -356,7 +319,6 @@ FTSManager#Token.addWriteToken(
 ```
 
 ##### removeWriteToken
-
 ```ts
 FTSManager#Token.removeWriteToken(
   namespace: string
@@ -366,7 +328,6 @@ FTSManager#Token.removeWriteToken(
 ```
 
 ##### addQueryToken
-
 ```ts
 FTSManager#Token.addQueryToken(
   namespace: string
@@ -376,7 +337,6 @@ FTSManager#Token.addQueryToken(
 ```
 
 ##### removeQueryToken
-
 ```ts
 FTSManager#Token.removeQueryToken(
   namespace: string
@@ -386,7 +346,6 @@ FTSManager#Token.removeQueryToken(
 ```
 
 ##### addDeleteToken
-
 ```ts
 FTSManager#Token.addDeleteToken(
   namespace: string
@@ -396,7 +355,6 @@ FTSManager#Token.addDeleteToken(
 ```
 
 ##### removeDeleteToken
-
 ```ts
 FTSManager#Token.removeDeleteToken(
   namespace: string
