@@ -1,9 +1,9 @@
 import { fetch } from 'extra-fetch'
 import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
-import { url, pathname, json, searchParams, signal, basicAuth, keepalive }
+import { url, pathname, json, searchParams, signal, basicAuth, keepalive, header }
   from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { QueryKeyword } from './utils'
+import { QueryKeyword, expectedVersion } from './utils'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import { Falsy } from 'justypes'
 
@@ -56,6 +56,30 @@ interface IQueryResult {
 
 export class FTSClient {
   constructor(private options: IFTSClientOptions) {}
+
+  private getCommonTransformers(
+    options: IFTSClientRequestOptions | IFTSClientRequestOptionsWithoutToken
+  ): Array<IHTTPOptionsTransformer | Falsy> {
+    const token = 'token' in options
+                  ? (options.token ?? this.options.token)
+                  : this.options.token
+    const auth = this.options.basicAuth
+
+    return [
+      url(this.options.server)
+    , auth && basicAuth(auth.username, auth.password)
+    , token && searchParams({ token })
+    , signal(raceAbortSignals([
+        options.signal
+      , options.timeout !== false && (
+          (options.timeout && timeoutSignal(options.timeout)) ??
+          (this.options.timeout && timeoutSignal(this.options.timeout))
+        )
+      ]))
+    , keepalive(options.keepalive ?? this.options.keepalive)
+    , header('Accept-Version', expectedVersion)
+    ]
+  }
 
   /**
    * @throws {AbortError}
@@ -228,28 +252,5 @@ export class FTSClient {
     return await fetch(req)
       .then(ok)
       .then(toJSON) as string[]
-  }
-
-  private getCommonTransformers(
-    options: IFTSClientRequestOptions | IFTSClientRequestOptionsWithoutToken
-  ): Array<IHTTPOptionsTransformer | Falsy> {
-    const token = 'token' in options
-                  ? (options.token ?? this.options.token)
-                  : this.options.token
-    const auth = this.options.basicAuth
-
-    return [
-      url(this.options.server)
-    , auth && basicAuth(auth.username, auth.password)
-    , token && searchParams({ token })
-    , signal(raceAbortSignals([
-        options.signal
-      , options.timeout !== false && (
-          (options.timeout && timeoutSignal(options.timeout)) ??
-          (this.options.timeout && timeoutSignal(this.options.timeout))
-        )
-      ]))
-    , keepalive(options.keepalive ?? this.options.keepalive)
-    ]
   }
 }

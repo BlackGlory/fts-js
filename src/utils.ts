@@ -17,6 +17,8 @@ export interface IFTSManagerRequestOptions {
   timeout?: number | false
 }
 
+export const expectedVersion = '0.2.6'
+
 export class FTSManagerBase {
   constructor(private options: IFTSManagerOptions) {}
 
@@ -34,7 +36,7 @@ export class FTSManagerBase {
         )
       ]))
     , keepalive(options.keepalive ?? this.options.keepalive)
-    , header('Accept-Version', '0.2.6')
+    , header('Accept-Version', expectedVersion)
     ]
   }
 }
