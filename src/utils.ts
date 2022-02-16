@@ -17,7 +17,7 @@ export interface IFTSManagerRequestOptions {
   timeout?: number | false
 }
 
-export const expectedVersion = '0.2.6'
+export const expectedVersion = '0.3.0'
 
 export class FTSManagerBase {
   constructor(private options: IFTSManagerOptions) {}
