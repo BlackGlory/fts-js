@@ -2,6 +2,7 @@ import { IHTTPOptionsTransformer } from 'extra-request'
 import { url, signal, keepalive, bearerAuth, header } from 'extra-request/transformers/index.js'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import type { IFTSManagerOptions } from './fts-manager'
+import { Falsy } from 'justypes'
 
 export enum QueryKeyword {
   And = 0
@@ -24,7 +25,7 @@ export class FTSManagerBase {
 
   protected getCommonTransformers(
     options: IFTSManagerRequestOptions
-  ): IHTTPOptionsTransformer[] {
+  ): Array<IHTTPOptionsTransformer | Falsy> {
     return [
       url(this.options.server)
     , bearerAuth(this.options.adminPassword)
@@ -35,7 +36,7 @@ export class FTSManagerBase {
           (this.options.timeout && timeoutSignal(this.options.timeout))
         )
       ]))
-    , keepalive(options.keepalive ?? this.options.keepalive)
+    , (options.keepalive ?? this.options.keepalive) && keepalive()
     , header('Accept-Version', expectedVersion)
     ]
   }
