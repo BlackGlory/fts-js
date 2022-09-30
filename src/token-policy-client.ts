@@ -28,7 +28,10 @@ export class TokenPolicyClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async get(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<ITokenPolicy> {
+  async get(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<ITokenPolicy> {
     const req = get(
       ...this.getCommonTransformers(options)
     , pathname(`/admin/fts/${namespace}/token-policies`)

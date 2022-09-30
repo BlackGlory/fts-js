@@ -7,21 +7,18 @@ yarn add @blackglory/fts-js
 ```
 
 ## API
-### FTSClient
 ```ts
-new FTSClient({
+interface IFTSClientOptions {
   server: string
-, token?: string
-, basicAuth?: {
+  token?: string
+  basicAuth?: {
     username: string
-  , password: string
+    password: string
   }
-, keepalive?: boolean
-, timeout?: number
-})
-```
+  keepalive?: boolean
+  timeout?: number
+}
 
-```ts
 interface IFTSClientRequestOptions {
   signal?: AbortSignal
   token?: string
@@ -34,9 +31,7 @@ interface IFTSClientRequestOptionsWithoutToken {
   keepalive?: boolean
   timeout?: number | false
 }
-```
 
-```ts
 type IQueryExpression =
 | IWordExpression
 | IPhraseExpression
@@ -51,314 +46,199 @@ type IPrefixExpression = [QueryKeyword.Prefix, string]
 type IAndExpression = [IQueryExpression, QueryKeyword.And, IQueryExpression]
 type IOrExpression = [IQueryExpression, QueryKeyword.Or, IQueryExpression]
 type INotExpression = [QueryKeyword.Not, IQueryExpression]
-```
 
-#### QueryKeyword
-```ts
-enum QueryKeyword {
-  And
-, Or
-, Not
-, Phrase
-, Prefix
-}
-```
-
-#### set
-```ts
-FTSClient#set(
-  namespace: string
-, bucket: string
-, id: string
-, lexemes: string[]
-, options?: IFTSClientRequestOptions
-): Promise<void>
-```
-
-#### query
-```ts
-FTSClient#query(
-  namespace: string
-, query: {
-    expression: IQueryExpression
-    buckets?: string[]
-    limit?: number
-    offset?: number
-  }
-, options?: IFTSClientRequestOptions
-): Promise<Array<{ bucket: string; id: string }>>
-```
-
-#### del
-```ts
-FTSClient#del(
-  namespace: string
-, bucket: string
-, id: string
-, options?: IFTSClientRequestOptions
-): Promise<void>
-```
-
-#### clearNamespace
-```ts
-FTSClient#clearNamespace(
-  namespace: string
-, options?: IFTSClientRequestOptions
-): Promise<void>
-```
-
-#### clearBucket
-```ts
-FTSClient#clearBucket(
-  namespace: string
-, options?: IFTSClientRequestOptions
-): Promise<void>
-```
-
-#### getNamespaceStats
-```ts
-FTSClient#getNamespaceStats(
-  namespace: string
-, options?: IFTSClientRequestOptionsWithoutToken
-): Promise<{
-  namespace: stirng
-  buckets: nubmer
-  objects: number
-}>
-```
-
-#### getBucketStats
-```ts
-FTSClient#getBucketStats(
-  namespace: string
-, bucket: string
-, options?: IFTSClientRequestOptionsWithoutToken
-): Promise<{
-  namespace: stirng
+interface IQueryResult {
   bucket: string
-  objects: number
-}>
-```
+  id: string
+}
 
-#### getAllNamespaces
-```ts
-FTSClient#getAllNamespaces(options?: IFTSClientRequestOptions): Promise<string[]>
-```
+class FTSClient {
+  constructor(options: IFTSClientOptions)
 
-#### getAllBuckets
-```ts
-FTSClient#getAllBuckets(
-  namespace: string
-, options?: IFTSClientRequestOptions
-): Promise<string[]>
+  set(
+    namespace: string
+  , bucket: string
+  , id: string
+  , lexemes: string[]
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<void>
+
+  query(
+    namespace: string
+  , query: {
+      expression: IQueryExpression
+      buckets?: string[]
+      limit?: number
+      offset?: number
+    }
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<IQueryResult[]>
+
+  del(
+    namespace: string
+  , bucket: string
+  , id: string
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<void>
+
+  clearNamespace(
+    namespace: string
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<void>
+
+  clearBucket(
+    namespace: string
+  , bucket: string
+  , options: IFTSClientRequestOptions = {}
+  ): Promise<void>
+
+  getNamespaceStats(
+    namespace: string
+  , options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<{ namespace: string; objects: number }>
+
+  getBucketStats(
+    namespace: string
+  , bucket: string
+  , options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<{ namespace: string; objects: number }>
+
+  getAllNamespaces(
+    options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<string[]>
+
+  getAllBuckets(
+    namespace: string
+  , options: IFTSClientRequestOptionsWithoutToken = {}
+  ): Promise<string[]>
+}
 ```
 
 ### FTSManager
 ```ts
-new FTSManager({
+interface IFTSManagerOptions {
   server: string
   adminPassword: string
   keepalive?: boolean
   timeout?: number
-})
-```
+}
 
-```ts
-interface IFTSManagerRequestOptions {
-  signal?: AbortSignal
-  keepalive?: boolean
-  timeout?: number | false
+class FTSManager {
+  constructor(options: IFTSManagerOptions)
+
+  Blacklist: BlacklistClient
+  Whitelist: WhitelistClient
+  TokenPolicy: TokenPolicyClient
+  Token: TokenClient
 }
 ```
 
-#### Blacklist
-##### getNamespaces
+#### BlacklistClient
 ```ts
-FTSManager#Blacklist.getNamespaces(
-  options?: IFTSManagerRequestOptions
-): Promise<string[]>
+class BlacklistClient {
+  getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
+  add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
+  remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
+}
 ```
 
-##### add
+#### WhitelistClient
 ```ts
-FTSManager#Blacklist.add(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
+class WhitelistClient {
+  getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
+  add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
+  remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
+}
 ```
 
-##### remove
+#### TokenPolicyClient
 ```ts
-FTSManager#Blacklist.remove(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-#### Whitelist
-##### getNamespaces
-```ts
-FTSManager#Whitelist.getNamespaces(
-  options?: IFTSManagerRequestOptions
-): Promise<string[]>
-```
-
-##### add
-```ts
-FTSManager#Whitelist.add(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### remove
-```ts
-FTSManager#Whitelist.remove(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-#### TokenPolicy
-##### getNamespaces
-```ts
-FTSManager#TokenPolicy.getNamespaces(
-  options?: IFTSManagerRequestOptions
-): Promise<string[]>
-```
-
-##### get
-```ts
-FTSManager#TokenPolicy.get(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<{
+interface ITokenPolicy {
   writeTokenRequired: boolean | null
   queryTokenRequired: boolean | null
   deleteTokenRequired: boolean | null
-}>
+}
+
+class TokenPolicyClient {
+  getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
+  get(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<ITokenPolicy> 
+  setWriteTokenRequired(
+    namespace: string
+  , val: boolean
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeWriteTokenRequired(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  setQueryTokenRequired(
+    namespace: string
+  , val: boolean
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeQueryTokenRequired(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  setDeleteTokenRequired(
+    namespace: string
+  , val: boolean
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeDeleteTokenRequired(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+}
 ```
 
-##### setWriteTokenRequired
+#### TokenClient
 ```ts
-FTSManager#TokenPolicy.setWriteTokenRequired(
-  namespace: string
-, val: boolean
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeWriteTokenRequired
-```ts
-FTSManager#TokenPolicy.removeWriteTokenRequired(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### setQueryTokenRequired
-```ts
-FTSManager#TokenPolicy.setQueryTokenRequired(
-  namespace: string
-, val: boolean
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeQueryTokenRequired
-```ts
-FTSManager#TokenPolicy.removeQueryTokenRequired(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### setDeleteTokenRequired
-```ts
-FTSManager#TokenPolicy.setDeleteTokenRequired(
-  namespace: string
-, val: boolean
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeDeleteTokenRequired
-```ts
-FTSManager#TokenPolicy.removeDeleteTokenRequired(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-#### Token
-##### getNamespaces
-```ts
-FTSManager#Token.getNamespaces(options?: IFTSManagerRequestOptions): Promise<string[]>
-```
-
-##### getTokens
-```ts
-FTSManager#Token.getTokens(
-  namespace: string
-, options?: IFTSManagerRequestOptions
-): Promise<Array<{
+interface ITokenInfo {
   token: string
   write: boolean
   query: boolean
   delete: boolean
-}>>
-```
+}
 
-##### addWriteToken
-```ts
-FTSManager#Token.addWriteToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeWriteToken
-```ts
-FTSManager#Token.removeWriteToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### addQueryToken
-```ts
-FTSManager#Token.addQueryToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeQueryToken
-```ts
-FTSManager#Token.removeQueryToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### addDeleteToken
-```ts
-FTSManager#Token.addDeleteToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
-```
-
-##### removeDeleteToken
-```ts
-FTSManager#Token.removeDeleteToken(
-  namespace: string
-, token: string
-, options?: IFTSManagerRequestOptions
-): Promise<void>
+class TokenClient {
+  getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
+  getTokens(
+    namespace: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<ITokenInfo[]>
+  addWriteToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeWriteToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  addQueryToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeQueryToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  addDeleteToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+  removeDeleteToken(
+    namespace: string
+  , token: string
+  , options: IFTSManagerRequestOptions = {}
+  ): Promise<void>
+}
 ```
