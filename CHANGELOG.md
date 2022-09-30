@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3](https://github.com/BlackGlory/fts-js/compare/v0.5.2...v0.5.3) (2022-09-30)
+
+
+### Bug Fixes
+
+* keepalive ([edb83f5](https://github.com/BlackGlory/fts-js/commit/edb83f5880c8af2a092a57b95bbec6abe041ed71))
+
 ### [0.5.2](https://github.com/BlackGlory/fts-js/compare/v0.5.1...v0.5.2) (2022-09-30)
 
 ### [0.5.1](https://github.com/BlackGlory/fts-js/compare/v0.5.0...v0.5.1) (2022-08-01)
