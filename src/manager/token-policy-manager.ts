@@ -1,24 +1,23 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { pathname } from 'extra-request/transformers/index.js'
+import { pathname, json } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
+import { IFTSManagerRequestOptions, Base } from './base'
 
-interface ITokenInfo {
-  token: string
-  write: boolean
-  query: boolean
-  delete: boolean
+interface ITokenPolicy {
+  writeTokenRequired: boolean | null
+  queryTokenRequired: boolean | null
+  deleteTokenRequired: boolean | null
 }
 
-export class TokenClient extends FTSManagerBase {
+export class TokenPolicyManager extends Base {
   /**
    * @throws {AbortError}
    */
   async getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/admin/fts-with-tokens')
+    , pathname('/admin/fts-with-token-policies')
     )
 
     return await fetch(req)
@@ -29,31 +28,32 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async getTokens(
+  async get(
     namespace: string
   , options: IFTSManagerRequestOptions = {}
-  ): Promise<ITokenInfo[]> {
+  ): Promise<ITokenPolicy> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens`)
+    , pathname(`/admin/fts/${namespace}/token-policies`)
     )
 
     return await fetch(req)
       .then(ok)
-      .then(toJSON) as ITokenInfo[]
+      .then(toJSON) as ITokenPolicy
   }
 
   /**
    * @throws {AbortError}
    */
-  async addWriteToken(
+  async setWriteTokenRequired(
     namespace: string
-  , token: string
+  , val: boolean
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/write`)
+    , pathname(`/admin/fts/${namespace}/token-policies/write-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -62,14 +62,13 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeWriteToken(
+  async removeWriteTokenRequired(
     namespace: string
-  , token: string
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/write`)
+    , pathname(`/admin/fts/${namespace}/token-policies/write-token-required`)
     )
 
     await fetch(req).then(ok)
@@ -78,14 +77,15 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async addQueryToken(
+  async setQueryTokenRequired(
     namespace: string
-  , token: string
+  , val: boolean
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/query`)
+    , pathname(`/admin/fts/${namespace}/token-policies/query-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -94,14 +94,13 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeQueryToken(
+  async removeQueryTokenRequired(
     namespace: string
-  , token: string
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/query`)
+    , pathname(`/admin/fts/${namespace}/token-policies/query-token-required`)
     )
 
     await fetch(req).then(ok)
@@ -110,14 +109,15 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async addDeleteToken(
+  async setDeleteTokenRequired(
     namespace: string
-  , token: string
+  , val: boolean
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/delete`)
+    , pathname(`/admin/fts/${namespace}/token-policies/delete-token-required`)
+    , json(val)
     )
 
     await fetch(req).then(ok)
@@ -126,14 +126,13 @@ export class TokenClient extends FTSManagerBase {
   /**
    * @throws {AbortError}
    */
-  async removeDeleteToken(
+  async removeDeleteTokenRequired(
     namespace: string
-  , token: string
   , options: IFTSManagerRequestOptions = {}
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/admin/fts/${namespace}/tokens/${token}/delete`)
+    , pathname(`/admin/fts/${namespace}/token-policies/delete-token-required`)
     )
 
     await fetch(req).then(ok)

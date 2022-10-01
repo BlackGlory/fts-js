@@ -1,5 +1,5 @@
-import { server } from '@test/token.mock'
-import { TokenClient } from '@src/token-client'
+import { server } from './token-manager.mock'
+import { TokenManager } from '@manager/token-manager'
 import { ADMIN_PASSWORD } from '@test/utils'
 import '@blackglory/jest-matchers'
 
@@ -7,9 +7,9 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe('TokenClient', () => {
+describe('TokenManager', () => {
   test('getNamespaces(): Promise<string[]>', async () => {
-    const client = createClient()
+    const client = createManager()
 
     const result = client.getNamespaces()
     const proResult = await result
@@ -25,7 +25,7 @@ describe('TokenClient', () => {
       query: boolean
     }>>
   `, async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
 
     const result = client.getTokens(namespace)
@@ -41,7 +41,7 @@ describe('TokenClient', () => {
   })
 
   test('addWriteToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -53,7 +53,7 @@ describe('TokenClient', () => {
   })
 
   test('removeWriteToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -65,7 +65,7 @@ describe('TokenClient', () => {
   })
 
   test('addQueryToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -77,7 +77,7 @@ describe('TokenClient', () => {
   })
 
   test('removeQueryToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -89,7 +89,7 @@ describe('TokenClient', () => {
   })
 
   test('addDeleteToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -101,7 +101,7 @@ describe('TokenClient', () => {
   })
 
   test('removeDeleteToken(namespace: string, token: string): Promise<void>', async () => {
-    const client = createClient()
+    const client = createManager()
     const namespace = 'namespace'
     const token = 'token'
 
@@ -113,8 +113,8 @@ describe('TokenClient', () => {
   })
 })
 
-function createClient() {
-  return new TokenClient({
+function createManager() {
+  return new TokenManager({
     server: 'http://localhost'
   , adminPassword: ADMIN_PASSWORD
   })

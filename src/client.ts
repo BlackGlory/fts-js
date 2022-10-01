@@ -3,12 +3,19 @@ import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
 import { url, pathname, json, searchParams, signal, basicAuth, keepalive, header }
   from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { QueryKeyword, expectedVersion } from './utils'
+import { expectedVersion } from './utils'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import { Falsy } from 'justypes'
 
-export { QueryKeyword } from './utils'
 export { HTTPClientError } from '@blackglory/http-status'
+
+export enum QueryKeyword {
+  And = 0
+, Or = 1
+, Not = 2
+, Phrase = 3
+, Prefix = 4
+}
 
 export interface IFTSClientOptions {
   server: string

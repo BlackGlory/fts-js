@@ -116,6 +116,12 @@ class FTSClient {
 
 ### FTSManager
 ```ts
+interface IFTSManagerRequestOptions {
+  signal?: AbortSignal
+  keepalive?: boolean
+  timeout?: number | false
+}
+
 interface IFTSManagerOptions {
   server: string
   adminPassword: string
@@ -126,32 +132,32 @@ interface IFTSManagerOptions {
 class FTSManager {
   constructor(options: IFTSManagerOptions)
 
-  Blacklist: BlacklistClient
-  Whitelist: WhitelistClient
-  TokenPolicy: TokenPolicyClient
-  Token: TokenClient
+  Blacklist: BlacklistManager
+  Whitelist: WhitelistManager
+  TokenPolicy: TokenPolicyManager
+  Token: TokenManager
 }
 ```
 
-#### BlacklistClient
+#### BlacklistManager
 ```ts
-class BlacklistClient {
+class BlacklistManager {
   getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
   add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
   remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
 }
 ```
 
-#### WhitelistClient
+#### WhitelistManager
 ```ts
-class WhitelistClient {
+class WhitelistManager {
   getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
   add(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
   remove(namespace: string, options: IFTSManagerRequestOptions = {}): Promise<void>
 }
 ```
 
-#### TokenPolicyClient
+#### TokenPolicyManager
 ```ts
 interface ITokenPolicy {
   writeTokenRequired: boolean | null
@@ -159,7 +165,7 @@ interface ITokenPolicy {
   deleteTokenRequired: boolean | null
 }
 
-class TokenPolicyClient {
+class TokenPolicyManager {
   getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
   get(
     namespace: string
@@ -195,7 +201,7 @@ class TokenPolicyClient {
 }
 ```
 
-#### TokenClient
+#### TokenManager
 ```ts
 interface ITokenInfo {
   token: string
@@ -204,7 +210,7 @@ interface ITokenInfo {
   delete: boolean
 }
 
-class TokenClient {
+class TokenManager {
   getNamespaces(options: IFTSManagerRequestOptions = {}): Promise<string[]>
   getTokens(
     namespace: string

@@ -1,5 +1,5 @@
-import { server } from '@test/fts.mock'
-import { FTSClient } from '@src/fts-client'
+import { server } from '@test/client.mock'
+import { FTSClient } from '@src/client'
 import { TOKEN } from '@test/utils'
 import '@blackglory/jest-matchers'
 

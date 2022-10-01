@@ -2,9 +2,9 @@ import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
 import { pathname } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
+import { IFTSManagerRequestOptions, Base } from './base'
 
-export class WhitelistClient extends FTSManagerBase {
+export class WhitelistManager extends Base {
   /**
    * @throws {AbortError}
    */

@@ -2,9 +2,9 @@ import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
 import { pathname, signal } from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
-import { IFTSManagerRequestOptions, FTSManagerBase } from './utils'
+import { IFTSManagerRequestOptions, Base } from './base'
 
-export class BlacklistClient extends FTSManagerBase {
+export class BlacklistManager extends Base {
   /**
    * @throws {AbortError}
    */
