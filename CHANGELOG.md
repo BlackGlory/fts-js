@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/BlackGlory/fts-js/compare/v0.5.3...v0.6.0) (2022-10-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* Removed `HTTPError`, `AbortError`, `HTTPClientError`
+
+* remove `HTTPError`, `AbortError`, `HTTPClientError` ([0458f16](https://github.com/BlackGlory/fts-js/commit/0458f16d695562323b0221ff154f3554651136ba))
+
 ### [0.5.3](https://github.com/BlackGlory/fts-js/compare/v0.5.2...v0.5.3) (2022-09-30)
 
 
