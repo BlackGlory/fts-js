@@ -7,8 +7,6 @@ import { expectedVersion } from './utils'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import { Falsy } from 'justypes'
 
-export { HTTPClientError } from '@blackglory/http-status'
-
 export enum QueryKeyword {
   And = 0
 , Or = 1
