@@ -676,7 +676,7 @@
   resolved "https://registry.yarnpkg.com/@blackglory/errors/-/errors-1.1.2.tgz#0577f01ca13850049efa0dd729e1a26e77e1dc3a"
   integrity sha512-THXSkTUB5eXSn7Yj01TgizNqw2rRnkNj0t6drNtmGQNJRoh4qLdSD0WUiM6ClGgKTdaBJbAarRqG/6Gn/NjLig==
 
-"@blackglory/errors@^2.2.1", "@blackglory/errors@^2.2.2":
+"@blackglory/errors@^2.2.2":
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/@blackglory/errors/-/errors-2.2.2.tgz#44dd18531b97c8b1e9892bb6022b92a2c0a112ae"
   integrity sha512-12BgxmxFfQso2aNaeGC1Sf0O73J6nRvqLRIp8BWUD7AMfhTra35f2IF2HNQHHV4suvx1zfVJfE7bvH9r56G5JA==
@@ -742,7 +742,7 @@
   resolved "https://registry.yarnpkg.com/@blackglory/pass/-/pass-1.1.0.tgz#f281b7647bf542f98ede594338742ab406f97afc"
   integrity sha512-J8epu3YVtfzP+VHJE5RR42bI0tAGBZ4nK8+0zAOfY8amw58ykWb2tUJD+N4l6SCpGZ/fQ5S6tQDl+qyNoOIhzg==
 
-"@blackglory/prelude@^0.1.0":
+"@blackglory/prelude@^0.1.0", "@blackglory/prelude@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@blackglory/prelude/-/prelude-0.1.5.tgz#2ed0f2b543868250d93c1f893e6d92a462d4643c"
   integrity sha512-Hkc3KrUb3TpLu+cUhGyFkGCEU3/GfWzSOF/F+ci5G1hD/gDgM+hOvjx0bm8LFg8RwMXMf+u1yUmS5Xertii29g==
@@ -797,7 +797,7 @@
     justypes "^0.1.6"
     lodash.isplainobject "^4.0.6"
 
-"@blackglory/types@^1.0.0", "@blackglory/types@^1.0.1", "@blackglory/types@^1.1.0", "@blackglory/types@^1.2.1", "@blackglory/types@^1.3.0":
+"@blackglory/types@^1.1.0", "@blackglory/types@^1.2.1", "@blackglory/types@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-1.3.0.tgz#32fbdc95fff4b15609942e8b87f1a5490b7b0c71"
   integrity sha512-qW9nWqmQT3ShT2NYP3p2ohpPvs+wS+YfOXbKbf37HTdWJOGuCafMSa7laMJF0BnBJwwTr+uyJSZru+QMMmgvUg==
@@ -2891,15 +2891,15 @@ external-editor@^3.0.3:
     tmp "^0.0.33"
 
 extra-abort@^0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/extra-abort/-/extra-abort-0.1.3.tgz#02406fbdce8b695799d2d8e4287efe7aa3bcf8b4"
-  integrity sha512-PU0yHUM5fqfC3itVSzmYWGDe7/GY0reHMlya0CEYG62ufs/kzJ1cXazQ62n3BrKulCYsX5oAc8MCcuBFohBBwQ==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/extra-abort/-/extra-abort-0.1.4.tgz#b6b2cae51d6bb6ef232c5fa8cfb33294d10bdf90"
+  integrity sha512-trq5yQ01BJ8QJnwJapgnB+9qndB8Lp0Tw3Ci+Eh2MdHGQKBKZNLjTxH4tehN2YiKogiz9hMakp5WNUpeXFrcDg==
   dependencies:
-    "@blackglory/errors" "^2.2.1"
-    "@blackglory/types" "^1.0.0"
+    "@blackglory/errors" "^2.2.2"
+    "@blackglory/types" "^1.3.0"
     abort-controller "^3.0.0"
-    iterable-operator "^1.0.0"
-    justypes "^2.0.0"
+    iterable-operator "^2.1.0"
+    justypes "^3.0.0"
 
 extra-fetch@^1.8.5:
   version "1.9.0"
@@ -2991,14 +2991,12 @@ extra-rand@^0.1.1:
   integrity sha512-sDpJWzuKa1bTrVVG3dkCiNMt93NanphQIWhW4tUS9PDiA0KTZ+fzyS4Idw+7/lH5ZzxtOiHEJEnBWSN4gi8gyA==
 
 extra-request@^4.0.1:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/extra-request/-/extra-request-4.0.3.tgz#c845ee44f7a11a83c50e23e4c7a2f7a245075bec"
-  integrity sha512-ngSYJYkoH4I6+3i08q5jlAdb/uGX/QpxgCkO4e8f4tsxEHcSvead7fac1iThxAxdMbYFM8TfNMOZMIHrUJh47w==
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/extra-request/-/extra-request-4.1.2.tgz#8b8d1f06f5d938d3834747c2c09897bd5fa1527d"
+  integrity sha512-YVQlKvDeXFzbCNvOwenLHpJ9nCa6BwNvDzxW5PSCfdOy2IwESBRsoZ+Eot1aIPuCKeKHPeHqUYr4L75vdx/zzg==
   dependencies:
-    "@blackglory/errors" "^2.2.1"
-    "@blackglory/types" "^1.0.1"
+    "@blackglory/prelude" "^0.1.5"
     js-base64 "^3.7.2"
-    justypes "^2.0.0"
     papaparse "^5.3.1"
 
 extra-response@^0.3.9:
@@ -3788,7 +3786,7 @@ iterable-operator@^0.14.4:
     "@blackglory/go" "^0.1.0"
     "@blackglory/types" "^0.5.1"
 
-iterable-operator@^1.0.0, iterable-operator@^1.1.0, iterable-operator@^1.2.1:
+iterable-operator@^1.1.0, iterable-operator@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-1.2.1.tgz#f24be5929a571bac6c51c2dff9f0fe535fa4bf54"
   integrity sha512-wxW7d467ZY9OKWDAPQTdR7zTyQgEVt7k4VLAZ/Y+x5lnen023oFbo1QfxMMNw+PZAhfETjRyzPOGmxBg5vS7bw==
@@ -3797,6 +3795,16 @@ iterable-operator@^1.0.0, iterable-operator@^1.1.0, iterable-operator@^1.2.1:
     "@blackglory/go" "^1.1.2"
     "@blackglory/types" "^1.2.1"
     justypes "^2.2.0"
+
+iterable-operator@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-2.1.0.tgz#11c490d9da7f6f44999422b032de91419b545c5c"
+  integrity sha512-1Gs+zCwYo9E5sfRWepLgdQBhU6ZSgx6CJRjWbJi/YpQ4rj34Axk1rhpl1YXVYgQQBCNDm0kIuCK7bmQ3lKUUww==
+  dependencies:
+    "@blackglory/errors" "^2.2.2"
+    "@blackglory/go" "^1.1.2"
+    "@blackglory/types" "^1.3.0"
+    justypes "^3.0.0"
 
 jest-changed-files@^27.5.1:
   version "27.5.1"
