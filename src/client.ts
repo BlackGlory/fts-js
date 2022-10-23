@@ -1,6 +1,6 @@
 import { fetch } from 'extra-fetch'
 import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
-import { url, pathname, json, searchParams, signal, basicAuth, keepalive, header }
+import { url, appendPathname, json, searchParams, signal, basicAuth, keepalive, header }
   from 'extra-request/transformers/index.js'
 import { ok, toJSON } from 'extra-response'
 import { expectedVersion } from './utils'
@@ -98,7 +98,7 @@ export class FTSClient {
   ): Promise<void> {
     const req = put(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
+    , appendPathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
     , json(lexemes)
     )
 
@@ -122,7 +122,7 @@ export class FTSClient {
 
     const req = post(
       ...this.getCommonTransformers(options)
-    , pathname(
+    , appendPathname(
         buckets
       ? `/fts/${namespace}/buckets/${buckets.join(',')}/query`
       : `/fts/${namespace}/query`
@@ -148,7 +148,7 @@ export class FTSClient {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
+    , appendPathname(`/fts/${namespace}/buckets/${bucket}/objects/${id}`)
     )
 
     await fetch(req).then(ok)
@@ -163,7 +163,7 @@ export class FTSClient {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}`)
+    , appendPathname(`/fts/${namespace}`)
     )
 
     await fetch(req).then(ok)
@@ -179,7 +179,7 @@ export class FTSClient {
   ): Promise<void> {
     const req = del(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/buckets/${bucket}`)
+    , appendPathname(`/fts/${namespace}/buckets/${bucket}`)
     )
 
     await fetch(req).then(ok)
@@ -194,7 +194,7 @@ export class FTSClient {
   ): Promise<{ namespace: string; objects: number }> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/stats`)
+    , appendPathname(`/fts/${namespace}/stats`)
     )
 
     return await fetch(req)
@@ -215,7 +215,7 @@ export class FTSClient {
   ): Promise<{ namespace: string; objects: number }> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/buckets/${bucket}/stats`)
+    , appendPathname(`/fts/${namespace}/buckets/${bucket}/stats`)
     )
 
     return await fetch(req)
@@ -234,7 +234,7 @@ export class FTSClient {
   ): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname('/fts')
+    , appendPathname('/fts')
     )
 
     return await fetch(req)
@@ -251,7 +251,7 @@ export class FTSClient {
   ): Promise<string[]> {
     const req = get(
       ...this.getCommonTransformers(options)
-    , pathname(`/fts/${namespace}/buckets`)
+    , appendPathname(`/fts/${namespace}/buckets`)
     )
 
     return await fetch(req)
