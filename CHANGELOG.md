@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/BlackGlory/fts-js/compare/v0.6.1...v0.6.2) (2022-10-23)
+
+
+### Bug Fixes
+
+* replace `pathname` with `appendPathname` ([a2b61b8](https://github.com/BlackGlory/fts-js/commit/a2b61b8e29e940f9852295a5122a62689b041ade))
+
 ### [0.6.1](https://github.com/BlackGlory/fts-js/compare/v0.6.0...v0.6.1) (2022-10-21)
 
 ## [0.6.0](https://github.com/BlackGlory/fts-js/compare/v0.5.3...v0.6.0) (2022-10-21)
