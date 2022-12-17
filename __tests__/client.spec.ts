@@ -1,7 +1,6 @@
 import { server } from '@test/client.mock'
 import { FTSClient } from '@src/client'
 import { TOKEN } from '@test/utils'
-import '@blackglory/jest-matchers'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())
@@ -22,11 +21,9 @@ describe('FTSClient', () => {
     const id = 'id'
     const lexemes = ['lexeme']
 
-    const result = client.set(namespace, bucket, id, lexemes)
-    const proResult = await result
+    const result = await client.set(namespace, bucket, id, lexemes)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   describe(`
@@ -44,15 +41,13 @@ describe('FTSClient', () => {
       const client = createClient()
       const namespace = 'namespace'
 
-      const result = client.query(namespace, {
+      const result = await client.query(namespace, {
         expression: ''
       , limit: 20
       , offset: 10
       })
-      const proResult = await result
 
-      expect(result).toBePromise()
-      expect(proResult).toStrictEqual([
+      expect(result).toStrictEqual([
         { bucket: 'bucket', id: 'id' }
       ])
     })
@@ -61,16 +56,14 @@ describe('FTSClient', () => {
       const client = createClient()
       const namespace = 'namespace'
 
-      const result = client.query(namespace, {
+      const result = await client.query(namespace, {
         expression: ''
       , buckets: ['bucket']
       , limit: 20
       , offset: 10
       })
-      const proResult = await result
 
-      expect(result).toBePromise()
-      expect(proResult).toStrictEqual([
+      expect(result).toStrictEqual([
         { bucket: 'bucket', id: 'id' }
       ])
     })
@@ -84,22 +77,18 @@ describe('FTSClient', () => {
     const bucket = 'bucket'
     const id = 'id'
 
-    const result = client.del(namespace, bucket, id)
-    const proResult = await result
+    const result = await client.del(namespace, bucket, id)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('clearNamespace(namespace: string): Prmise<void>', async () => {
     const client = createClient()
     const namespace = 'namespace'
 
-    const result = client.clearNamespace(namespace)
-    const proResult = await result
+    const result = await client.clearNamespace(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test('clearBucket(namespace: string, bucket: string): Prmise<void>', async () => {
@@ -107,11 +96,9 @@ describe('FTSClient', () => {
     const namespace = 'namespace'
     const bucket = 'bucket'
 
-    const result = client.clearBucket(namespace, bucket)
-    const proResult = await result
+    const result = await client.clearBucket(namespace, bucket)
 
-    expect(result).toBePromise()
-    expect(proResult).toBeUndefined()
+    expect(result).toBeUndefined()
   })
 
   test(`
@@ -124,11 +111,9 @@ describe('FTSClient', () => {
     const client = createClient()
     const namespace = 'namespace'
 
-    const result = client.getNamespaceStats(namespace)
-    const proResult = await result
+    const result = await client.getNamespaceStats(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual({
+    expect(result).toStrictEqual({
       namespace
     , buckets: 1
     , objects: 1
@@ -146,11 +131,9 @@ describe('FTSClient', () => {
     const namespace = 'namespace'
     const bucket = 'bucket'
 
-    const result = client.getBucketStats(namespace, bucket)
-    const proResult = await result
+    const result = await client.getBucketStats(namespace, bucket)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual({
+    expect(result).toStrictEqual({
       namespace
     , bucket
     , objects: 1
@@ -160,22 +143,18 @@ describe('FTSClient', () => {
   test('getAllNamespaces(): Promise<string[]>', async () => {
     const client = createClient()
 
-    const result = client.getAllNamespaces()
-    const proResult = await result
+    const result = await client.getAllNamespaces()
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['namespace'])
+    expect(result).toStrictEqual(['namespace'])
   })
 
   test('getAllBuckets(): Promise<string[]>', async () => {
     const client = createClient()
     const namespace = 'namespace'
 
-    const result = client.getAllBuckets(namespace)
-    const proResult = await result
+    const result = await client.getAllBuckets(namespace)
 
-    expect(result).toBePromise()
-    expect(proResult).toStrictEqual(['bucket'])
+    expect(result).toStrictEqual(['bucket'])
   })
 })
 
