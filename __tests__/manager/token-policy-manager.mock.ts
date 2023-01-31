@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node'
 import { rest } from 'msw'
-import { badAuth, badJson } from '@test/utils'
+import { badAuth, badJson } from '@test/utils.js'
 
 export const server = setupServer(
   rest.get('/admin/fts-with-token-policies', (req, res, ctx) => {

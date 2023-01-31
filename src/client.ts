@@ -1,9 +1,9 @@
 import { fetch } from 'extra-fetch'
-import { put, get, del, post, IHTTPOptionsTransformer } from 'extra-request'
+import { put, get, del, post, IRequestOptionsTransformer } from 'extra-request'
 import { url, appendPathname, json, searchParams, signal, basicAuth, keepalive, header }
-  from 'extra-request/transformers/index.js'
+  from 'extra-request/transformers'
 import { ok, toJSON } from 'extra-response'
-import { expectedVersion } from './utils'
+import { expectedVersion } from './utils.js'
 import { timeoutSignal, raceAbortSignals } from 'extra-abort'
 import { Falsy } from 'justypes'
 
@@ -64,7 +64,7 @@ export class FTSClient {
 
   private getCommonTransformers(
     options: IFTSClientRequestOptions | IFTSClientRequestOptionsWithoutToken
-  ): Array<IHTTPOptionsTransformer | Falsy> {
+  ): Array<IRequestOptionsTransformer | Falsy> {
     const token = 'token' in options
                   ? (options.token ?? this.options.token)
                   : this.options.token

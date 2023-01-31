@@ -1,8 +1,8 @@
 import { fetch } from 'extra-fetch'
 import { get, put, del } from 'extra-request'
-import { appendPathname, signal } from 'extra-request/transformers/index.js'
+import { appendPathname, signal } from 'extra-request/transformers'
 import { ok, toJSON } from 'extra-response'
-import { IFTSManagerRequestOptions, Base } from './base'
+import { IFTSManagerRequestOptions, Base } from './base.js'
 
 export class BlacklistManager extends Base {
   /**

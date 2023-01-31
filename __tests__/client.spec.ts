@@ -1,6 +1,7 @@
-import { server } from '@test/client.mock'
-import { FTSClient } from '@src/client'
-import { TOKEN } from '@test/utils'
+import { server } from '@test/client.mock.js'
+import { FTSClient } from '@src/client.js'
+import { TOKEN } from '@test/utils.js'
+import '@test/polyfill.js'
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
 beforeEach(() => server.resetHandlers())

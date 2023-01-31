@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node'
 import { rest } from 'msw'
-import { badAuth } from '@test/utils'
+import { badAuth } from '@test/utils.js'
 
 export const server = setupServer(
   rest.get('/admin/whitelist', (req, res, ctx) => {

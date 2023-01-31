@@ -1,7 +1,7 @@
-import { BlacklistManager } from './blacklist-manager'
-import { WhitelistManager } from './whitelist-manager'
-import { TokenPolicyManager } from './token-policy-manager'
-import { TokenManager } from './token-manager'
+import { BlacklistManager } from './blacklist-manager.js'
+import { WhitelistManager } from './whitelist-manager.js'
+import { TokenPolicyManager } from './token-policy-manager.js'
+import { TokenManager } from './token-manager.js'
 
 export interface IFTSManagerOptions {
   server: string
