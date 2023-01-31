@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/BlackGlory/fts-js/compare/v0.6.3...v0.7.0) (2023-01-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* - CommonJS => ESM.
+- The minimal version of Node.js is 16.
+- It requires FTS^0.4.0.
+
+### Features
+
+* upgrade ([e9c43e6](https://github.com/BlackGlory/fts-js/commit/e9c43e6d185a34c3402f7246cf579b2d6c567af9))
+
 ### [0.6.3](https://github.com/BlackGlory/fts-js/compare/v0.6.2...v0.6.3) (2022-10-31)
 
 ### [0.6.2](https://github.com/BlackGlory/fts-js/compare/v0.6.1...v0.6.2) (2022-10-23)
