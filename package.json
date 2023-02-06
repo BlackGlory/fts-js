@@ -9,6 +9,9 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "browser": {
+    "./lib/utils/rpc-client.js": "./lib/utils/rpc-client.browser.js"
+  },
   "repository": "git@github.com:BlackGlory/fts-js.git",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
@@ -25,11 +28,16 @@
     "prepublishOnly": "run-s prepare clean build",
     "clean": "rimraf lib",
     "build": "tsc --project tsconfig.build.json",
+    "docker:test": "run-s docker:test:clean docker:test:build docker:test:run docker:test:clean",
+    "docker:coverage": "run-s docker:test:clean docker:test:build docker:test:coverage docker:test:clean",
+    "docker:test:build": "docker-compose --project-name fts-js --file docker-compose.test.yml build",
+    "docker:test:run": "docker-compose --project-name fts-js --file docker-compose.test.yml run --rm test",
+    "docker:test:clean": "docker-compose --project-name fts-js --file docker-compose.test.yml down",
     "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s prepare lint build test",
+      "pre-commit": "run-s prepare lint build docker:test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -38,15 +46,14 @@
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@types/jest": "^29.4.0",
+    "@types/ws": "^8.5.4",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.33.0",
     "husky": "4",
     "jest": "^29.4.1",
-    "jest-environment-jsdom": "^29.4.1",
     "jest-resolve": "^29.4.1",
-    "msw": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "return-style": "^2.0.3",
     "rimraf": "^4.1.2",
@@ -58,11 +65,13 @@
     "typescript-transform-paths": "^3.4.6"
   },
   "dependencies": {
-    "@blackglory/http-status": "^2.0.1",
+    "@blackglory/prelude": "^0.3.1",
+    "@delight-rpc/extra-native-websocket": "^0.4.0",
+    "@delight-rpc/extra-websocket": "^0.4.0",
+    "delight-rpc": "^5.0.3",
     "extra-abort": "^0.3.1",
-    "extra-fetch": "^4.0.4",
-    "extra-request": "^8.1.6",
-    "extra-response": "^0.5.1",
-    "justypes": "^4.1.0"
+    "extra-native-websocket": "^0.3.1",
+    "extra-websocket": "^0.3.1",
+    "ws": "^8.12.0"
   }
 }

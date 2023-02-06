@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  test:
+    build:
+      dockerfile: Dockerfile.test
+      context: .
+      args:
+        - 'HTTP_PROXY'
+        - 'HTTPS_PROXY'
+    depends_on:
+      - fts
+    command: test
+
+  fts:
+    image: 'blackglory/fts:0.5.0'
+    depends_on:
+      - postgres
+    environment:
+      - 'FTS_POSTGRES_HOST=postgres'
+      - 'FTS_POSTGRES_PORT=5432'
+      - 'FTS_POSTGRES_USERNAME=postgres'
+      - 'FTS_POSTGRES_PASSWORD=password'
+      - 'FTS_POSTGRES_DATABASE=test'
+
+  postgres:
+    image: 'postgres:15'
+    environment:
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_INITDB_ARGS=--locale=C.UTF-8'
