@@ -1,5 +1,5 @@
 import { createRPCClient } from '@utils/rpc-client.js'
-import { ClientProxy, BatchClient, BatchClientProxy } from 'delight-rpc'
+import { ClientProxy } from 'delight-rpc'
 import { IAPI, INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression } from './contract.js'
 import { timeoutSignal, withAbortSignal } from 'extra-abort'
 export { INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression, IAndExpression, INotExpression, IOrExpression, IPhraseExpression, IPrefixExpression, ITermExpression, QueryKeyword } from './contract.js'
@@ -12,14 +12,15 @@ export interface IFTSClientOptions {
 
 export class FTSClient {
   static async create(options: IFTSClientOptions): Promise<FTSClient> {
-    const { client, batchClient, proxy, close } = await createRPCClient(options.server)
-    return new FTSClient(client, batchClient, proxy, close, options.timeout)
+    const { client, close } = await createRPCClient(
+      options.server
+    , options.retryIntervalForReconnection
+    )
+    return new FTSClient(client, close, options.timeout)
   }
 
   private constructor(
     private client: ClientProxy<IAPI>
-  , private batchClient: BatchClient
-  , private batchProxy: BatchClientProxy<IAPI, unknown>
   , private closeClients: () => Promise<void>
   , private timeout?: number
   ) {}
