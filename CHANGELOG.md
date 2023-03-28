@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/BlackGlory/fts-js/compare/v0.8.0...v0.8.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* retryIntervalForReconnection ([6970b92](https://github.com/BlackGlory/fts-js/commit/6970b922be4cdc4b1431db3fb08b7ae0c13cf795))
+
 ## [0.8.0](https://github.com/BlackGlory/fts-js/compare/v0.7.0...v0.8.0) (2023-02-06)
 
 
