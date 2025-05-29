@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { FTSClient } from '@src/fts-client.js'
 
 const server = 'ws://fts:8080'
