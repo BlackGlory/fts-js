@@ -1,7 +1,8 @@
 import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
 import { IAPI, INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression } from './contract.js'
-import { timeoutSignal, withAbortSignal } from 'extra-abort'
+import { raceAbortSignals, timeoutSignal } from 'extra-abort'
+import { isntUndefined } from '@blackglory/prelude'
 export { INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression, IAndExpression, INotExpression, IOrExpression, IPhraseExpression, IPrefixExpression, ITermExpression, QueryKeyword } from './contract.js'
 
 export interface IFTSClientOptions {
@@ -29,36 +30,37 @@ export class FTSClient {
     await this.closeClients()
   }
 
-  async getNamespaceStats(namespace: string, timeout?: number): Promise<INamespaceStats> {
-    return await this.withTimeout(
-      () => this.client.getNamespaceStats(namespace)
-    , timeout ?? this.timeout
+  async getNamespaceStats(
+    namespace: string
+  , signal?: AbortSignal
+  ): Promise<INamespaceStats> {
+    return await this.client.getNamespaceStats(
+      namespace
+    , this.withTimeout(signal)
     )
   }
 
   async getBucketStats(
     namespace: string
   , bucket: string
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<IBucketStats> {
-    return await this.withTimeout(
-      () => this.client.getBucketStats(namespace, bucket)
-    , timeout ?? this.timeout
+    return await this.client.getBucketStats(
+      namespace
+    , bucket
+    , this.withTimeout(signal)
     )
   }
 
-  async getAllNamespaces(timeout?: number): Promise<string[]> {
-    return await this.withTimeout(
-      () => this.client.getAllNamespaces()
-    , timeout ?? this.timeout
-    )
+  async getAllNamespaces(signal?: AbortSignal): Promise<string[]> {
+    return await this.client.getAllNamespaces(this.withTimeout(signal))
   }
 
-  async getAllBuckets(namespace: string, timeout?: number): Promise<string[]> {
-    return await this.withTimeout(
-      () => this.client.getAllBuckets(namespace)
-    , timeout ?? this.timeout
-    )
+  async getAllBuckets(
+    namespace: string
+  , signal?: AbortSignal
+  ): Promise<string[]> {
+    return await this.client.getAllBuckets(namespace, this.withTimeout(signal))
   }
 
   async setDocument(
@@ -66,11 +68,14 @@ export class FTSClient {
   , bucket: string
   , documentId: string
   , lexemes: string[]
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<void> {
-    await this.withTimeout(
-      () => this.client.setDocument(namespace, bucket, documentId, lexemes)
-    , timeout ?? this.timeout
+    await this.client.setDocument(
+      namespace
+    , bucket
+    , documentId
+    , lexemes
+    , this.withTimeout(signal)
     )
   }
 
@@ -78,29 +83,32 @@ export class FTSClient {
     namespace: string
   , bucket: string
   , documentId: string
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<void> {
-    await this.withTimeout(
-      () => this.client.removeDocument(namespace, bucket, documentId)
-    , timeout ?? this.timeout
+    await this.client.removeDocument(
+      namespace
+    , bucket
+    , documentId
+    , this.withTimeout(signal)
     )
   }
 
-  async clearBucketsByNamespace(namespace: string, timeout?: number): Promise<void> {
-    await this.withTimeout(
-      () => this.client.clearBucketsByNamespace(namespace)
-    , timeout ?? this.timeout
-    )
+  async clearBucketsByNamespace(
+    namespace: string
+  , signal?: AbortSignal
+  ): Promise<void> {
+    await this.client.clearBucketsByNamespace(namespace, this.withTimeout(signal))
   }
 
   async clearDocumentsByBucket(
     namespace: string
   , bucket: string
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<void> {
-    await this.withTimeout(
-      () => this.client.clearDocumentsByBucket(namespace, bucket)
-    , timeout ?? this.timeout
+    await this.client.clearDocumentsByBucket(
+      namespace
+    , bucket
+    , this.withTimeout(signal)
     )
   }
 
@@ -112,22 +120,20 @@ export class FTSClient {
       limit?: number
       offset?: number
     }
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<IDocumentQueryResult[]> {
-    return await this.withTimeout(
-      () => this.client.queryDocuments(namespace, expression, options ?? {})
-    , timeout ?? this.timeout
+    return await this.client.queryDocuments(
+      namespace
+    , expression
+    , options ?? {}
+    , this.withTimeout(signal)
     )
   }
 
-  private async withTimeout<T>(
-    fn: () => PromiseLike<T>
-  , timeout: number | undefined = this.timeout
-  ): Promise<T> {
-    if (timeout) {
-      return await withAbortSignal(timeoutSignal(timeout), fn)
-    } else {
-      return await fn()
-    }
+  private withTimeout(signal?: AbortSignal): AbortSignal {
+    return raceAbortSignals([
+      isntUndefined(this.timeout) && timeoutSignal(this.timeout)
+    , signal
+    ])
   }
 }

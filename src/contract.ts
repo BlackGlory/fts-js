@@ -1,4 +1,4 @@
-export const expectedVersion = '^0.5.0'
+export const expectedVersion = '^0.5.4'
 
 export enum QueryKeyword {
   And = 0

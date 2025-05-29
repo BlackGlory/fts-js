@@ -11,9 +11,10 @@ services:
     command: test
 
   fts:
-    image: 'blackglory/fts:0.5.0'
+    image: 'blackglory/fts:0.5.4'
     depends_on:
       - postgres
+    restart: unless-stopped
     environment:
       - 'FTS_POSTGRES_HOST=postgres'
       - 'FTS_POSTGRES_PORT=5432'

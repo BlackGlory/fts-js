@@ -59,28 +59,39 @@ class FTSClient {
 
   close(): Promise<void>
 
-  getNamespaceStats(namespace: string, timeout?: number): Promise<INamespaceStats>
-  getBucketStats(namespace: string, bucket: string, timeout?: number): Promise<IBucketStats>
+  getNamespaceStats(
+    namespace: string
+  , signal?: AbortSignal
+  ): Promise<INamespaceStats>
+  getBucketStats(
+    namespace: string
+  , bucket: string
+  , signal?: AbortSignal
+  ): Promise<IBucketStats>
 
-  getAllNamespaces(timeout?: number): Promise<string[]>
-  getAllBuckets(namespace: string, timeout?: number): Promise<string[]>
+  getAllNamespaces(signal?: AbortSignal): Promise<string[]>
+  getAllBuckets(namespace: string, signal?: AbortSignal): Promise<string[]>
 
-  clearBucketsByNamespace(namespace: string, timeout?: number): Promise<void>
-  clearDocumentsByBucket(namespace: string, bucket: string, timeout?: number): Promise<void>
+  clearBucketsByNamespace(namespace: string, signal?: AbortSignal): Promise<void>
+  clearDocumentsByBucket(
+    namespace: string
+  , bucket: string
+  , signal?: AbortSignal
+  ): Promise<void>
 
   setDocument(
     namespace: string
   , bucket: string
   , documentId: string
   , lexemes: string[]
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<void>
 
   removeDocument(
     namespace: string
   , bucket: string
   , documentId: string
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<void>
 
   queryDocuments(
@@ -91,7 +102,7 @@ class FTSClient {
       limit?: number
       offset?: number
     }
-  , timeout?: number
+  , signal?: AbortSignal
   ): Promise<IDocumentQueryResult[]>
 }
 ```
