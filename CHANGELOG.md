@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/BlackGlory/fts-js/compare/v0.8.3...v0.9.0) (2025-05-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* - Replaced `timeout: number` with `signal: AbortSignal`
+- The module requires FTS@^0.5.4
+* Node.js v16 => Node.js v22
+
+### Features
+
+* replace `timeout: number` with `signal: AbortSignal` ([2bd03fd](https://github.com/BlackGlory/fts-js/commit/2bd03fd85b1a1d7b42dc1cd6b1504b57a16eeb9b))
+
+
+* upgrade dependencies ([5abfe30](https://github.com/BlackGlory/fts-js/commit/5abfe30d69e2acb7fb41b3d62fbe45a44793e40b))
+
 ### [0.8.3](https://github.com/BlackGlory/fts-js/compare/v0.8.2...v0.8.3) (2023-06-11)
 
 
