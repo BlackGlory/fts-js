@@ -16,6 +16,7 @@ export class FTSClient {
     const { client, close } = await createRPCClient(
       options.server
     , options.retryIntervalForReconnection
+    , options.timeout
     )
     return new FTSClient(client, close, options.timeout)
   }
