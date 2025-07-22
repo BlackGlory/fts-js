@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/BlackGlory/fts-js/compare/v0.9.0...v0.9.1) (2025-07-22)
+
+
+### Features
+
+* make the timeout apply to connect and reconnect ([63c66ef](https://github.com/BlackGlory/fts-js/commit/63c66ef8df00f1ce973e46953074ff5338779a09))
+
 ## [0.9.0](https://github.com/BlackGlory/fts-js/compare/v0.8.3...v0.9.0) (2025-05-29)
 
 
