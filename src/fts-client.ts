@@ -2,7 +2,6 @@ import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
 import { IAPI, INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression } from './contract.js'
 import { isAbortSignal, raceAbortSignals, timeoutSignal } from 'extra-abort'
-import { isntUndefined } from '@blackglory/prelude'
 export { INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression, IAndExpression, INotExpression, IOrExpression, IPhraseExpression, IPrefixExpression, ITermExpression, QueryKeyword } from './contract.js'
 
 export interface IFTSClientOptions {

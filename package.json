@@ -64,7 +64,6 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@blackglory/prelude": "^0.4.0",
     "@delight-rpc/extra-native-websocket": "^0.6.1",
     "@delight-rpc/extra-websocket": "^0.7.1",
     "delight-rpc": "^6.1.2",
