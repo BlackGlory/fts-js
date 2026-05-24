@@ -54,6 +54,11 @@ interface IFTSClientOptions {
   retryIntervalForReconnection?: number
 }
 
+interface IFTSClientRequestOptions {
+  signal?: AbortSignal
+  timeout?: number | false
+}
+
 class FTSClient {
   static create(options: IFTSClientOptions): Promise<FTSClient>
 
@@ -61,22 +66,30 @@ class FTSClient {
 
   getNamespaceStats(
     namespace: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<INamespaceStats>
   getBucketStats(
     namespace: string
   , bucket: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<IBucketStats>
 
-  getAllNamespaces(signal?: AbortSignal): Promise<string[]>
-  getAllBuckets(namespace: string, signal?: AbortSignal): Promise<string[]>
+  getAllNamespaces(
+    signalOrOptions?: AbortSignal | IFTSClientRequestOptions
+  ): Promise<string[]>
+  getAllBuckets(
+    namespace: string
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
+  ): Promise<string[]>
 
-  clearBucketsByNamespace(namespace: string, signal?: AbortSignal): Promise<void>
+  clearBucketsByNamespace(
+    namespace: string
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
+  ): Promise<void>
   clearDocumentsByBucket(
     namespace: string
   , bucket: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<void>
 
   setDocument(
@@ -84,14 +97,14 @@ class FTSClient {
   , bucket: string
   , documentId: string
   , lexemes: string[]
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<void>
 
   removeDocument(
     namespace: string
   , bucket: string
   , documentId: string
-  , signal?: AbortSignal
+  , signalOrOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<void>
 
   queryDocuments(
@@ -102,7 +115,7 @@ class FTSClient {
       limit?: number
       offset?: number
     }
-  , signal?: AbortSignal
+  , signalOrRequestOptions?: AbortSignal | IFTSClientRequestOptions
   ): Promise<IDocumentQueryResult[]>
 }
 ```
