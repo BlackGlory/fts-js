@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.4](https://github.com/BlackGlory/fts-js/compare/v0.9.3...v0.9.4) (2026-07-11)
+
+
+### Bug Fixes
+
+* **contract:** type `IPhraseExpression` ([6112c7a](https://github.com/BlackGlory/fts-js/commit/6112c7add4619556969411ef55a369842ddb845f))
+
 ### [0.9.3](https://github.com/BlackGlory/fts-js/compare/v0.9.2...v0.9.3) (2026-05-24)
 
 ### [0.9.2](https://github.com/BlackGlory/fts-js/compare/v0.9.1...v0.9.2) (2026-05-24)
