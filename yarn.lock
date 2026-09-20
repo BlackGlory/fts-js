@@ -187,6 +187,29 @@
     iterable-operator "^5.1.0"
     justypes "^4.3.0"
 
+"@blackglory/prelude@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@blackglory/prelude/-/prelude-0.5.0.tgz#7bca53991d0c3018190dc670e8b53e2855b7604c"
+  integrity sha512-dmurYRQSWbtd1cAvAH7xlKmwIqMZZoFCMBCTrEJFOH9jEkfXjLcp+SFruBr/2M7x3U+rQk+K/YPoVZVujsx/pw==
+  dependencies:
+    "@blackglory/errors" "^3.0.3"
+    "@blackglory/go" "^2.0.0"
+    "@blackglory/log" "^2.0.2"
+    "@blackglory/pass" "^1.1.1"
+    "@blackglory/structures" "^0.14.15"
+    extra-abort "^0.5.1"
+    extra-defer "^0.3.1"
+    extra-generator "^0.7.1"
+    extra-lazy "^2.0.2"
+    extra-promise "^7.0.0"
+    extra-rand "^0.5.1"
+    extra-tags "^0.5.4"
+    extra-timers "^0.3.1"
+    extra-utils "^6.1.0"
+    iterable-operator "^6.0.0"
+    justypes "^4.3.0"
+    return-style "^4.0.0"
+
 "@blackglory/structures@^0.11.4":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@blackglory/structures/-/structures-0.11.8.tgz#086f7285484e626374ed76881e2ccb21e9491ecf"
@@ -235,7 +258,7 @@
     iterable-operator "^5.0.0"
     justypes "^4.2.1"
 
-"@blackglory/structures@^0.14.11", "@blackglory/structures@^0.14.12", "@blackglory/structures@^0.14.13":
+"@blackglory/structures@^0.14.11", "@blackglory/structures@^0.14.12", "@blackglory/structures@^0.14.13", "@blackglory/structures@^0.14.15":
   version "0.14.15"
   resolved "https://registry.yarnpkg.com/@blackglory/structures/-/structures-0.14.15.tgz#218c29c08c8ce403de768cf82d67537de050ebfc"
   integrity sha512-uT6s1PS+Jx34XZtGQ+oyojXI0L3jfV+54OxiXauUlboP5JtdLuiHuy8IGAXtN5h02Apz2IZBDDvO0PsGM4Bzuw==
@@ -2078,6 +2101,14 @@ extra-generator@^0.5.1, extra-generator@^0.5.9:
     "@blackglory/prelude" "^0.3.1"
     return-style "^3.0.0"
 
+extra-generator@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/extra-generator/-/extra-generator-0.7.1.tgz#c070e81475f48b117e8ff54ff1aa1b3894da44c1"
+  integrity sha512-DaifZsRnyVN602vGttF5BOcAVtckDUhrkP21pBKOas4ctu9xIXPsvTdtRi9nGydFs4poB/b0ymrWlEGtW7MC1A==
+  dependencies:
+    "@blackglory/prelude" "^0.4.0"
+    return-style "^3.0.1"
+
 extra-json-stable-stringify@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/extra-json-stable-stringify/-/extra-json-stable-stringify-0.1.1.tgz#88cd14e18bcf5f27b91124efe1e7765a1363e539"
@@ -2250,6 +2281,21 @@ extra-rand@^0.4.1:
     extra-utils "^5.15.0"
     justypes "^4.2.1"
 
+extra-rand@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/extra-rand/-/extra-rand-0.5.1.tgz#fe0371c13001ca0c867ea562398d5e1c38f054cf"
+  integrity sha512-j2vhHm5UFqu2mqCoEoN6nhP6qb4XIFNIHS0KgCY1ZLFXSEJ90TdJPeUweOmxzlVrRrzmjYk8sspvPFUH7I2zCQ==
+  dependencies:
+    "@blackglory/prelude" "^0.4.0"
+    extra-utils "^5.21.0"
+
+extra-tags@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/extra-tags/-/extra-tags-0.5.4.tgz#74e0d282fe881c95e58b82095eb1d0f76df89079"
+  integrity sha512-la5n78qvNOVaS16VVJvUkFcmlaLENOzN0DkTgm8YBYr3xgc2Yhap5brMmZrOE2WfP4cPQfxFBdSJQUuxHwrElw==
+  dependencies:
+    extra-utils "^5.16.0"
+
 extra-timers@^0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/extra-timers/-/extra-timers-0.2.5.tgz#5b0bac06b111cfa1afbc1b991e1362dfe2db4617"
@@ -2306,7 +2352,7 @@ extra-utils@^5.1.0, extra-utils@^5.1.1, extra-utils@^5.16.0, extra-utils@^5.2.0,
     justypes "^4.2.0"
     lodash-es "^4.17.21"
 
-extra-utils@^5.15.0, extra-utils@^5.19.0, extra-utils@^5.20.0:
+extra-utils@^5.15.0, extra-utils@^5.19.0, extra-utils@^5.20.0, extra-utils@^5.21.0:
   version "5.21.0"
   resolved "https://registry.yarnpkg.com/extra-utils/-/extra-utils-5.21.0.tgz#6ef27d7cf74749d0f1a25e1053e5d8b352ccf053"
   integrity sha512-CcHHyAixw7rWc1cPKabKLwUYoA9ERszfHlh9kFJyZU2z/sND0zrEHChN6ex9XFquc4nshj5GlRikzV/+B7cwKQ==
@@ -2314,6 +2360,16 @@ extra-utils@^5.15.0, extra-utils@^5.19.0, extra-utils@^5.20.0:
     "@blackglory/errors" "^3.1.0"
     justypes "^4.2.0"
     lodash-es "^4.17.21"
+
+extra-utils@^6.1.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/extra-utils/-/extra-utils-6.2.0.tgz#c4c19a453b00c0d954be1428054b5d1a831c8144"
+  integrity sha512-j4AiAPIvbRV5paiXp1uvTDTEgvHszBO0XrHBc18FP5Cr20xuOMBYVk3Xk7EESjhGlQppO6Ct3h9ZgYgfyaxjQA==
+  dependencies:
+    "@blackglory/errors" "^3.1.0"
+    justypes "^4.5.0"
+    lodash-es "^4.17.23"
+    return-style "^4.0.0"
 
 extra-websocket@^0.5.3:
   version "0.5.3"
@@ -3325,6 +3381,11 @@ lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
+lodash-es@^4.17.23:
+  version "4.18.1"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.18.1.tgz#b962eeb80d9d983a900bf342961fb7418ca10b1d"
+  integrity sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"

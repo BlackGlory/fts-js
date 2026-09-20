@@ -52,6 +52,11 @@ type INotExpression = [
 
 interface IFTSClientOptions {
   server: string
+
+  basicAuth?: {
+    username: string
+    password: string
+  }
   timeout?: number
   retryIntervalForReconnection?: number
 }

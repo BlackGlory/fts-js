@@ -1,11 +1,16 @@
 import { createRPCClient } from '@utils/rpc-client.js'
 import { ClientProxy } from 'delight-rpc'
-import { IAPI, INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression } from './contract.js'
+import { IAPI, INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression, expectedVersion } from './contract.js'
 import { isAbortSignal, raceAbortSignals, timeoutSignal } from 'extra-abort'
 export { INamespaceStats, IBucketStats, IDocumentQueryResult, IQueryExpression, IAndExpression, INotExpression, IOrExpression, IPhraseExpression, IPrefixExpression, ITermExpression, QueryKeyword } from './contract.js'
 
 export interface IFTSClientOptions {
   server: string
+
+  basicAuth?: {
+    username: string
+    password: string
+  }
   timeout?: number
   retryIntervalForReconnection?: number
 }
@@ -17,11 +22,13 @@ export interface IFTSClientRequestOptions {
 
 export class FTSClient {
   static async create(options: IFTSClientOptions): Promise<FTSClient> {
-    const { client, close } = await createRPCClient(
-      options.server
-    , options.retryIntervalForReconnection
-    , options.timeout
-    )
+    const { client, close } = await createRPCClient<IAPI>({
+      url: options.server
+    , retryIntervalForReconnection: options.retryIntervalForReconnection
+    , timeoutForConnection: options.timeout
+    , basicAuth: options.basicAuth
+    , expectedVersion
+    })
     return new FTSClient(client, close, options.timeout)
   }
 
