@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.5](https://github.com/BlackGlory/fts-js/compare/v0.9.4...v0.9.5) (2026-09-20)
+
+
+### Features
+
+* add `IFTSClientOptions.basicAuth` ([c5a492d](https://github.com/BlackGlory/fts-js/commit/c5a492d813d81ea725e6b5cea43dcdda723b394a))
+
 ### [0.9.4](https://github.com/BlackGlory/fts-js/compare/v0.9.3...v0.9.4) (2026-07-11)
 
 
