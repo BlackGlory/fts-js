@@ -20,7 +20,10 @@ export async function createRPCClient<IAPI extends object>(options: {
   close: () => Promise<void>
 }> {
   const url = go(() => {
-    const url = new URL(options.url, document.URL)
+    const url = new URL(
+      options.url
+    , location.href // 优于使用`document.URL`, 因为一些环境中可能没有`document`.
+    )
 
     if (options.basicAuth) {
       url.username = options.basicAuth.username
